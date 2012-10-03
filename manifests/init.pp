@@ -1,12 +1,12 @@
 class mysql {
   require mysql::config
 
-  package { 'github/brews/mysql':
-    ensure => '5.5.20-github2',
-    notify => Service['com.github.mysql']
+  package { 'boxen/brews/mysql':
+    ensure => '5.5.20-boxen2',
+    notify => Service['com.boxen.mysql']
   }
 
-  file { "${github::config::homebrewdir}/var/mysql":
+  file { "${boxen::config::homebrewdir}/var/mysql":
     ensure  => absent,
     force   => true,
     recurse => true
@@ -15,7 +15,7 @@ class mysql {
   exec { 'init-mysql-db':
     command  => "mysql_install_db \
       --verbose \
-      --basedir=${github::config::homebrewdir} \
+      --basedir=${boxen::config::homebrewdir} \
       --datadir=${mysql::config::datadir} \
       --tmpdir=/tmp",
 
@@ -23,14 +23,14 @@ class mysql {
     provider => shell
   }
 
-  service { 'com.github.mysql':
+  service { 'com.boxen.mysql':
     ensure => running,
     notify => Exec['wait-for-mysql']
   }
 
-  file { "${github::config::envdir}/mysql.sh":
+  file { "${boxen::config::envdir}/mysql.sh":
     content => template('mysql/env.sh.erb'),
-    require => File[$github::config::envdir]
+    require => File[$boxen::config::envdir]
   }
 
   exec { 'wait-for-mysql':
@@ -40,9 +40,9 @@ class mysql {
     refreshonly => true
   }
 
-  Package['github/brews/mysql'] ->
-    File["${github::config::homebrewdir}/var/mysql"]
+  Package['boxen/brews/mysql'] ->
+    File["${boxen::config::homebrewdir}/var/mysql"]
     Exec['init-mysql-db'] ->
-    Service['com.github.mysql'] ->
+    Service['com.boxen.mysql'] ->
     Exec['wait-for-mysql']
 }
