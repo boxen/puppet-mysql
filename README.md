@@ -8,4 +8,6 @@ Requires the following boxen modules:
 
 ```puppet
 include mysql
+
+mysql::db { 'mydb': }
 ```
