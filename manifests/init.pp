@@ -33,6 +33,8 @@ class mysql {
     require => File[$boxen::config::envdir]
   }
 
+  $nc = "/usr/bin/nc -z localhost ${mysql::config::port}"
+
   exec { 'wait-for-mysql':
     command     => "while ! ${nc}; do sleep 1; done",
     provider    => shell,
