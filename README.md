@@ -11,3 +11,9 @@ include mysql
 
 mysql::db { 'mydb': }
 ```
+
+## Developing
+
+Write code.
+
+Run `script/cibuild`.
