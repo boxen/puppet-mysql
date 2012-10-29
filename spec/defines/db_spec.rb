@@ -10,7 +10,9 @@ describe 'mysql::db' do
     let(:params) do
       { :ensure => 'present' }
     end
+
     it { should include_class('mysql') }
+
     it "creates the database" do
       should contain_exec("create mysql db #{title}").
              with(
@@ -24,6 +26,7 @@ describe 'mysql::db' do
     let(:params) do
       { :ensure => 'absent' }
     end
+
     it { should include_class('mysql') }
     it { should_not contain_exec("create mysql db #{title}") }
 
