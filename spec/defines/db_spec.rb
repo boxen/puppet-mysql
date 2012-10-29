@@ -25,6 +25,8 @@ describe 'mysql::db' do
       { :ensure => 'absent' }
     end
     it { should include_class('mysql') }
+    it { should_not contain_exec("create mysql db #{title}") }
+
     it "destroys the database" do
       should contain_exec("delete mysql db #{title}").
              with(
