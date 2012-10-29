@@ -12,7 +12,7 @@ describe 'mysql::db' do
     end
     it { should include_class('mysql') }
     it "creates the database" do
-      should contain_exec("mysql-db-#{title}").
+      should contain_exec("create mysql db #{title}").
              with(
                :command => "mysqladmin -uroot create #{title}",
                :creates => "/opt/boxen/data/mysql/#{title}"
@@ -26,7 +26,7 @@ describe 'mysql::db' do
     end
     it { should include_class('mysql') }
     it "destroys the database" do
-      should contain_exec("delete-mysql-db-#{title}").
+      should contain_exec("delete mysql db #{title}").
              with(
                :command => "mysqladmin -uroot drop database #{title}"
              )
