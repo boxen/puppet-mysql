@@ -8,4 +8,5 @@ describe 'mysql' do
   it { should include_class('mysql::config') }
   it { should contain_service('com.boxen.mysql').with(:ensure => 'running') }
   it { should contain_exec('init-mysql-db') }
+  it { should contain_file('/tmp/mysql.sock').with(:ensure => 'link', :target => '/opt/boxen/data/mysql/socket') }
 end

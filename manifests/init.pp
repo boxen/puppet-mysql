@@ -33,6 +33,12 @@ class mysql {
     require => File[$boxen::config::envdir]
   }
 
+  file { "/tmp/mysql.sock":
+    ensure => link,
+    target => "${mysql::config::datadir}/socket",
+    require => Package['boxen/brews/mysql'],
+  }
+
   $nc = "/usr/bin/nc -z localhost ${mysql::config::port}"
 
   exec { 'wait-for-mysql':
