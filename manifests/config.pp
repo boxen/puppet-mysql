@@ -16,7 +16,7 @@ class mysql::config {
 
   file { $configfile:
     content => template('mysql/my.cnf.erb'),
-    notify  => Service['com.boxen.mysql'],
+    notify  => Service['dev.mysql'],
   }
 
   file { "${boxen::config::homebrewdir}/etc/my.cnf":
@@ -25,10 +25,10 @@ class mysql::config {
     target  => $configfile
   }
 
-  file { '/Library/LaunchDaemons/com.boxen.mysql.plist':
-    content => template('mysql/com.boxen.mysql.plist.erb'),
+  file { '/Library/LaunchDaemons/dev.mysql.plist':
+    content => template('mysql/dev.mysql.plist.erb'),
     group   => 'wheel',
-    notify  => Service['com.boxen.mysql'],
+    notify  => Service['dev.mysql'],
     owner   => 'root'
   }
 }

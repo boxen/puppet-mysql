@@ -3,7 +3,7 @@ class mysql {
 
   package { 'boxen/brews/mysql':
     ensure => '5.5.20-boxen2',
-    notify => Service['com.boxen.mysql']
+    notify => Service['dev.mysql']
   }
 
   file { "${boxen::config::homebrewdir}/var/mysql":
@@ -23,9 +23,14 @@ class mysql {
     provider => shell
   }
 
-  service { 'com.boxen.mysql':
+  service { 'dev.mysql':
     ensure => running,
     notify => Exec['wait-for-mysql']
+  }
+
+  service { 'com.boxen.mysql': # replaced by dev.mysql
+    before => Service['dev.mysql'],
+    enable => false
   }
 
   file { "${boxen::config::envdir}/mysql.sh":
@@ -45,6 +50,6 @@ class mysql {
   Package['boxen/brews/mysql'] ->
     File["${boxen::config::homebrewdir}/var/mysql"]
     Exec['init-mysql-db'] ->
-    Service['com.boxen.mysql'] ->
+    Service['dev.mysql'] ->
     Exec['wait-for-mysql']
 }
