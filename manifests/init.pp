@@ -1,5 +1,36 @@
 class mysql {
   require mysql::config
+  require homebrew
+
+  file { [
+    $mysql::config::configdir,
+    $mysql::config::datadir,
+    $mysql::config::logdir
+  ]:
+    ensure => directory,
+  }
+
+  file { $mysql::config::configfile:
+    content => template('mysql/my.cnf.erb'),
+    notify  => Service['dev.mysql'],
+  }
+
+  file { "${boxen::config::homebrewdir}/etc/my.cnf":
+    ensure  => link,
+    require => [File[$mysql::config::configfile], Class['homebrew']],
+    target  => $mysql::config::configfile,
+  }
+
+  file { '/Library/LaunchDaemons/dev.mysql.plist':
+    content => template('mysql/dev.mysql.plist.erb'),
+    group   => 'wheel',
+    notify  => Service['dev.mysql'],
+    owner   => 'root'
+  }
+
+  homebrew::formula { 'mysql':
+    before => Package['boxen/brews/mysql'],
+  }
 
   package { 'boxen/brews/mysql':
     ensure => '5.5.20-boxen2',
