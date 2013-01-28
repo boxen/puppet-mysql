@@ -17,7 +17,11 @@ class mysql {
 
   file { "${boxen::config::homebrewdir}/etc/my.cnf":
     ensure  => link,
-    require => [File[$mysql::config::configfile], Class['homebrew']],
+    require => [
+      Package['boxen/brews/mysql'],
+      File[$mysql::config::configfile],
+      Class['homebrew']
+    ],
     target  => $mysql::config::configfile,
   }
 
@@ -40,7 +44,8 @@ class mysql {
   file { "${boxen::config::homebrewdir}/var/mysql":
     ensure  => absent,
     force   => true,
-    recurse => true
+    recurse => true,
+    require => Package['boxen/brews/mysql'],
   }
 
   exec { 'init-mysql-db':
@@ -49,14 +54,18 @@ class mysql {
       --basedir=${boxen::config::homebrewdir} \
       --datadir=${mysql::config::datadir} \
       --tmpdir=/tmp",
-
     creates  => "${mysql::config::datadir}/mysql",
-    provider => shell
+    provider => shell,
+    require  => [
+      Package['boxen/brew/mysql'],
+      File["${boxen::config::homebrewdir}/var/mysql"]
+    ],
+    notify   => Service['dev.mysql']
   }
 
   service { 'dev.mysql':
-    ensure => running,
-    notify => Exec['wait-for-mysql']
+    ensure  => running,
+    notify  => Exec['wait-for-mysql'],
   }
 
   service { 'com.boxen.mysql': # replaced by dev.mysql
@@ -77,10 +86,4 @@ class mysql {
     timeout     => 30,
     refreshonly => true
   }
-
-  Package['boxen/brews/mysql'] ->
-    File["${boxen::config::homebrewdir}/var/mysql"]
-    Exec['init-mysql-db'] ->
-    Service['dev.mysql'] ->
-    Exec['wait-for-mysql']
 }
