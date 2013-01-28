@@ -57,7 +57,7 @@ class mysql {
     creates  => "${mysql::config::datadir}/mysql",
     provider => shell,
     require  => [
-      Package['boxen/brew/mysql'],
+      Package['boxen/brews/mysql'],
       File["${boxen::config::homebrewdir}/var/mysql"]
     ],
     notify   => Service['dev.mysql']
