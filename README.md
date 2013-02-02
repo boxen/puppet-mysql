@@ -25,21 +25,34 @@ Once installed, you can access the following variables in your environment, proj
 In config/database.yml:
 
 ```yaml
-development:
-  adapter: mysql3
+<%
+  socket = [
+    ENV["BOXEN_MYSQL_SOCKET"],
+    "/var/run/mysql5/mysqld.sock",
+    "/tmp/mysql.sock"
+  ].detect { |f| File.exist? f }
+
+  port = ENV["BOXEN_MYSQL_PORT"] || "3306"
+%>
+
+development: &development
+  adapter: mysql
   database: yourapp_development
   username: root
-  password:
-  port: <%= ENV['BOXEN_MYSQL_PORT'] || 3306 %>
+<% if socket %>
+  host: localhost
+  socket: <%= socket %>
+<% else %>
+  host: 127.0.0.1
+  port: <%= port %>
+<% end %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: mysql2
+  <<: *development
   database: yourapp_test
-  username: root
-  port: <%= ENV['BOXEN_MYSQL_PORT'] || 3306 %>
 ```
 
 ## Developing
