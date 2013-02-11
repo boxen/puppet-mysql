@@ -30,7 +30,7 @@ In config/database.yml:
     ENV["BOXEN_MYSQL_SOCKET"],
     "/var/run/mysql5/mysqld.sock",
     "/tmp/mysql.sock"
-  ].detect { |f| File.exist? f }
+  ].detect { |f| f && File.exist? f }
 
   port = ENV["BOXEN_MYSQL_PORT"] || "3306"
 %>
