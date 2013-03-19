@@ -5,6 +5,8 @@ describe 'mysql::import_tz' do
     { :boxen_home => '/opt/boxen'}
   end
 
+  let(:title) { 'name' }
+
   context 'importing timezones' do
     it { should include_class('mysql') }
 
