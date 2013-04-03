@@ -1,3 +1,8 @@
+# Internal: Prepare your system for MySQL.
+#
+# Examples
+#
+#   include mysql::config
 class mysql::config {
   require boxen::config
 
