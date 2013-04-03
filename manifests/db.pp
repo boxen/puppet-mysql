@@ -1,3 +1,10 @@
+# Public: Create MySQL Databases
+#
+# namevar - The name of the database.
+#
+# Examples
+#
+#   mysql::db { 'foo': }
 define mysql::db($ensure = present) {
   require mysql
 

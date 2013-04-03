@@ -1,3 +1,8 @@
+# Public: Install MySQL
+#
+# Examples
+#
+#   include mysql
 class mysql {
   require mysql::config
   require homebrew
