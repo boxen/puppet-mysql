@@ -1,6 +1,6 @@
 # MySQL Puppet Module for Boxen
 
-[![Build Status](https://travis-ci.org/todd/puppet-mysql.png)](https://travis-ci.org/todd/puppet-mysql)
+[![Build Status](https://travis-ci.org/boxen/puppet-mysql.png)](https://travis-ci.org/boxen/puppet-mysql)
 
 ## Usage
 
