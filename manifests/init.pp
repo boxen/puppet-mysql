@@ -91,4 +91,13 @@ class mysql {
     timeout     => 30,
     refreshonly => true
   }
+
+  exec { 'mysql-tzinfo-to-sql':
+    command     => "mysql_tzinfo_to_sql /usr/share/zoneinfo | \
+      mysql -u root mysql -P ${mysql::config::port} -S ${mysql::config::socket}",
+    provider    => shell,
+    creates     => "${mysql::config::datadir}/.tz_info_created",
+    subscribe   => Exec['wait-for-mysql'],
+    refreshonly => true
+  }
 }
