@@ -19,5 +19,7 @@ describe 'mysql' do
     should contain_service('dev.mysql').with(:ensure => 'running')
 
     should contain_exec('init-mysql-db')
+
+    should contain_exec('mysql-tzinfo-to-sql')
   end
 end
