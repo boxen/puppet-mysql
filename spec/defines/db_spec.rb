@@ -33,7 +33,7 @@ describe 'mysql::db' do
     it "destroys the database" do
       should contain_exec("delete mysql db #{title}").
              with(
-               :command => "mysqladmin -uroot drop database #{title}"
+               :command => "mysqladmin -uroot drop #{title}"
              )
     end
   end
