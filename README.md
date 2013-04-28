@@ -1,6 +1,6 @@
-# MySQL Puppet Module for Boxen
+# MySQL Puppet Module for Boxen with Enhancements for Betterment's Setup
 
-[![Build Status](https://travis-ci.org/boxen/puppet-mysql.png)](https://travis-ci.org/boxen/puppet-mysql)
+[![Build Status](https://travis-ci.org/Betterment/puppet-mysql.png)](https://travis-ci.org/Betterment/puppet-mysql)
 
 ## Usage
 
