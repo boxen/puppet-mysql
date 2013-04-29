@@ -41,7 +41,7 @@ describe 'mysql::db' do
     it "creates the correct user" do
       should contain_exec("create user dbuser with ALL permissions on % to #{title}").
              with(
-               :command => "mysql -uroot -e \"CREATE USER 'dbuser'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'%'; FLUSH PRIVILEGES;\""
+               :command => "mysql -uroot -e \"CREATE USER 'dbuser'@'%' IDENTIFIED BY 'password';                    GRANT ALL PRIVILEGES ON name . * TO 'dbuser'@'%';                    GRANT ALL PRIVILEGES ON name . * TO 'dbuser'@'localhost';                    FLUSH PRIVILEGES;\""
              )
     end
   end
@@ -58,6 +58,29 @@ describe 'mysql::db' do
       should contain_exec("delete mysql db #{title}").
              with(
                :command => "mysqladmin -uroot drop database #{title}"
+             )
+    end
+  end
+
+  context "when ensure is absent and user is present" do
+    let(:params) do
+      { :ensure => 'absent', :user => 'dbuser' }
+    end
+
+    it { should include_class('mysql') }
+    it { should_not contain_exec("create mysql db #{title}") }
+
+    it "destroys the database" do
+      should contain_exec("delete mysql db #{title}").
+             with(
+               :command => "mysqladmin -uroot drop database #{title}"
+             )
+    end
+
+    it "destroys the correct user" do
+      should contain_exec("drop user dbuser@%").
+             with(
+               :command => "mysql -uroot -e \"GRANT USAGE ON *.* TO 'dbuser'@'%'; DROP USER 'dbuser'@'%'; DROP USER 'dbuser'@'localhost'; FLUSH PRIVILEGES;\""
              )
     end
   end
