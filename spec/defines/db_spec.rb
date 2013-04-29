@@ -25,7 +25,8 @@ describe 'mysql::db' do
   context "when ensure and user are present" do
     let(:params) do
       { :ensure => 'present',
-        :user => "dbuser" }
+        :user => "dbuser",
+        :password => "god" }
     end
 
     it { should include_class('mysql') }
@@ -41,7 +42,7 @@ describe 'mysql::db' do
     it "creates the correct user" do
       should contain_exec("create user dbuser with ALL permissions on % to #{title}").
              with(
-               :command => "mysql -uroot -e \" GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'localhost' IDENTIFIED BY 'password'; FLUSH PRIVILEGES;\""
+               :command => "mysql -uroot -e \" GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'%' IDENTIFIED BY 'god'; GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'localhost' IDENTIFIED BY 'god'; FLUSH PRIVILEGES;\""
              )
     end
   end
