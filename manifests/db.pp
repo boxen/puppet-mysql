@@ -17,10 +17,10 @@ define mysql::db($ensure = present, $user = absent, $password = 'password', $hos
 
     if $user != 'absent' {
       exec { "create user ${user} with ${grant} permissions on ${host} to ${name}":
-        command => "mysql -uroot -e \"CREATE USER '${user}'@'${host}' IDENTIFIED BY '${password}';\
-                    GRANT ${grant} PRIVILEGES ON ${name} . * TO '${user}'@'${host}';\
-                    GRANT ${grant} PRIVILEGES ON ${name} . * TO '${user}'@'localhost';\
-                    FLUSH PRIVILEGES;\"",
+        command => "mysql -uroot -e \"\
+ GRANT ${grant} PRIVILEGES ON ${name} . * TO '${user}'@'${host}' IDENTIFIED BY '${password}';\
+ GRANT ${grant} PRIVILEGES ON ${name} . * TO '${user}'@'localhost' IDENTIFIED BY '${password}';\
+ FLUSH PRIVILEGES;\"",
         require => Exec['wait-for-mysql']
       }
     }
@@ -33,7 +33,10 @@ define mysql::db($ensure = present, $user = absent, $password = 'password', $hos
 
     if $user != 'absent' {
       exec { "drop user ${user}@${host}":
-        command => "mysql -uroot -e \"GRANT USAGE ON *.* TO '${user}'@'${host}'; DROP USER '${user}'@'${host}'; DROP USER '${user}'@'localhost'; FLUSH PRIVILEGES;\"",
+        command => "mysql -uroot -e \"\
+ GRANT USAGE ON *.* TO '${user}'@'${host}'; DROP USER '${user}'@'${host}';\
+ GRANT USAGE ON *.* TO '${user}'@'localhost'; DROP USER '${user}'@'localhost';\
+ FLUSH PRIVILEGES;\"",
         require => Exec['wait-for-mysql']
       }
     }

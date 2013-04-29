@@ -41,7 +41,7 @@ describe 'mysql::db' do
     it "creates the correct user" do
       should contain_exec("create user dbuser with ALL permissions on % to #{title}").
              with(
-               :command => "mysql -uroot -e \"CREATE USER 'dbuser'@'%' IDENTIFIED BY 'password';                    GRANT ALL PRIVILEGES ON name . * TO 'dbuser'@'%';                    GRANT ALL PRIVILEGES ON name . * TO 'dbuser'@'localhost';                    FLUSH PRIVILEGES;\""
+               :command => "mysql -uroot -e \" GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'localhost' IDENTIFIED BY 'password'; FLUSH PRIVILEGES;\""
              )
     end
   end
@@ -80,7 +80,7 @@ describe 'mysql::db' do
     it "destroys the correct user" do
       should contain_exec("drop user dbuser@%").
              with(
-               :command => "mysql -uroot -e \"GRANT USAGE ON *.* TO 'dbuser'@'%'; DROP USER 'dbuser'@'%'; DROP USER 'dbuser'@'localhost'; FLUSH PRIVILEGES;\""
+               :command => "mysql -uroot -e \" GRANT USAGE ON *.* TO 'dbuser'@'%'; DROP USER 'dbuser'@'%'; GRANT USAGE ON *.* TO 'dbuser'@'localhost'; DROP USER 'dbuser'@'localhost'; FLUSH PRIVILEGES;\""
              )
     end
   end
