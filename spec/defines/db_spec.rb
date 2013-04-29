@@ -41,7 +41,7 @@ describe 'mysql::db' do
     it "creates the correct user" do
       should contain_exec("create user dbuser with ALL permissions on % to #{title}").
              with(
-               :command => "mysql -uroot -e \"CREATE USER 'dbuser'@$'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@$'%'; FLUSH PRIVILEGES;\""
+               :command => "mysql -uroot -e \"CREATE USER 'dbuser'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON #{title} . * TO 'dbuser'@'%'; FLUSH PRIVILEGES;\""
              )
     end
   end

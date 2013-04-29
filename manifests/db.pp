@@ -17,7 +17,7 @@ define mysql::db($ensure = present, $user = absent, $password = 'password', $hos
 
     if $user != 'absent' {
       exec { "create user ${user} with ${grant} permissions on ${host} to ${name}":
-        command => "mysql -uroot -e \"CREATE USER '${user}'@$'${host}' IDENTIFIED BY '${password}'; GRANT ${grant} PRIVILEGES ON ${name} . * TO '${user}'@$'${host}'; FLUSH PRIVILEGES;\"",
+        command => "mysql -uroot -e \"CREATE USER '${user}'@'${host}' IDENTIFIED BY '${password}'; GRANT ${grant} PRIVILEGES ON ${name} . * TO '${user}'@'${host}'; FLUSH PRIVILEGES;\"",
         require => Exec['wait-for-mysql']
       }
     }
