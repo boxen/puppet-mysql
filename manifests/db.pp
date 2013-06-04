@@ -16,7 +16,7 @@ define mysql::db($ensure = present) {
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql db ${name}":
-      command => "mysqladmin -uroot drop database ${name}",
+      command => "mysqladmin -uroot drop ${name}",
       require => Exec['wait-for-mysql']
     }
   }
