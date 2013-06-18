@@ -105,6 +105,9 @@ class mysql {
     command  => "mysql -u root --password='' \
       -P ${mysql::config::port} -S ${mysql::config::socket} \
       -e 'grant all privileges on *.* to \'root\'@\'localhost\''",
+    unless  => "mysql -uroot -p${mysql::config::port} \
+      -e \"select * from mysql.user where User = 'root' and Host = 'localhost'\" \
+      --password='' | grep root",
     provider => shell
   }
 }
