@@ -31,7 +31,7 @@ describe 'mysql::user' do
     end
 
     it { should include_class('mysql') }
-    it { should_not contain_exec("create mysql db #{title}") }
+    it { should_not contain_exec("create mysql user #{title}") }
 
     it "destroys the database" do
       should contain_exec("delete mysql user #{title}").
