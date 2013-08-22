@@ -17,7 +17,7 @@ describe 'mysql::user' do
       should contain_exec("create mysql user #{title}").
              with(
                :command => "mysql -uroot -p13306 --password=''\
-        -e \"create user '#{title}'@'localhost' indentified by '';\""
+        -e \"create user '#{title}'@'localhost' identified by '';\""
         )
     end
   end
