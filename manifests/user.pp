@@ -12,8 +12,7 @@
 define mysql::user($ensure = present,
                     $readonly = false,
                     $host = 'localhost',
-                    $password = '',
-                    $databases = [ ]) {
+                    $password = '') {
   require mysql
 
   if $ensure == 'present' {
@@ -23,12 +22,6 @@ define mysql::user($ensure = present,
       require => Exec['wait-for-mysql'],
       unless  => "mysql -uroot -p13306 -e 'SELECT User,Host FROM mysql.user;' \
         --password='' | grep -w '${name}' | grep -w '${host}'"
-    }
-
-    mysql::user::grant { $databases:
-      username => $name,
-      host     => $host,
-      readonly => $readonly,
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql user ${name}":
