@@ -3,7 +3,7 @@
 # namevar - The name of the user.
 # password - Password for the new user. Defaults to empty
 # readonly - If the user should be read-only. Defaults to false
-# database - Databases to grant access to. Defaults to [].
+# databases - Databases to grant access to. Defaults to [].
 # host - host to permit access from. Defaults to 'localhost'
 #
 # Examples
@@ -13,7 +13,7 @@ define mysql::user($ensure = present,
                     $readonly = false,
                     $host = 'localhost',
                     $password = '',
-                    $database = [ ]) {
+                    $databases = [ ]) {
   require mysql
 
   if $ensure == 'present' {
@@ -23,6 +23,12 @@ define mysql::user($ensure = present,
       require => Exec['wait-for-mysql'],
       unless  => "mysql -uroot -p13306 -e 'SELECT User,Host FROM mysql.user;' \
         --password='' | grep -w '${name}' | grep -w '${host}'"
+    }
+
+    mysql::user::grant { $databases:
+      username => $name,
+      host     => $host,
+      readonly => $readonly,
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql user ${name}":

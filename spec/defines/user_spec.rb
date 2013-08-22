@@ -8,7 +8,8 @@ describe 'mysql::user' do
 
   context "when ensure is present" do
     let(:params) do
-      { :ensure => 'present' }
+      { :ensure => 'present',
+        :databases => ['one', 'two'] }
     end
 
     it { should include_class('mysql') }
@@ -18,7 +19,9 @@ describe 'mysql::user' do
              with(
                :command => "mysql -uroot -p13306 --password=''\
         -e \"create user '#{title}'@'localhost' indentified by '';\""
-             )
+        )
+      should contain_mysql__user__grant("one")
+      should contain_mysql__user__grant("two")
     end
   end
 
