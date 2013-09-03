@@ -8,6 +8,11 @@
 include mysql
 
 mysql::db { 'mydb': }
+
+# if you wish to override the port mysql listens on:
+class { 'mysql':
+  port => 23306
+}
 ```
 
 ## Required Puppet Modules
