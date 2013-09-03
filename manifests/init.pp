@@ -3,9 +3,12 @@
 # Examples
 #
 #   include mysql
-class mysql {
-  require mysql::config
+class mysql($port = 13306) {
   require homebrew
+
+  class { 'mysql::config':
+    override_port => $port
+  }
 
   file { [
     $mysql::config::configdir,
