@@ -3,7 +3,7 @@
 # Examples
 #
 #   include mysql::config
-class mysql::config($override_port) {
+class mysql::config($override_port = 13306) {
   require boxen::config
 
   $configdir  = "${boxen::config::configdir}/mysql"
