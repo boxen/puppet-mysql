@@ -14,7 +14,7 @@ define mysql::db($ensure = present) {
       creates => "${mysql::config::datadir}/${name}",
       require => Exec['wait-for-mysql'],
       unless  => "mysql -uroot -p${mysql::config::port} -e 'show databases' \
-        --password='' | grep '${name}'"
+        --password='' | grep -w '${name}'"
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql db ${name}":
