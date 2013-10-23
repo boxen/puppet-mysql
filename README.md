@@ -20,7 +20,7 @@ mysql::db { 'mydb': }
 
 Once installed, you can access the following variables in your environment, projects, etc:
 
-* BOXEN_MYSQL_PORT: the configured MySQL port
+* BOXEN_MYSQL_PORT: the configured MySQL port (**DEFAULTS TO 13306**)
 * BOXEN_MYSQL_URL: the URL for MySQL, including localhost & port
 * BOXEN_MYSQL_SOCKET: the path to the MySQL socket
 
