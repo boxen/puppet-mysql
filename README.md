@@ -18,6 +18,8 @@ mysql::db { 'mydb': }
 
 ## Environment
 
+**ATTENTION** Boxen uses a non standard **13306** port to avoid collisions.
+
 Once installed, you can access the following variables in your environment, projects, etc:
 
 * BOXEN_MYSQL_PORT: the configured MySQL port
