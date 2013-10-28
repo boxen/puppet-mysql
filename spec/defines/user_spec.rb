@@ -17,7 +17,7 @@ describe 'mysql::user' do
       should contain_exec("create mysql user #{title}").
              with(
                :command => "mysql -uroot -p13306 --password=''\
-        -e \"create user '#{title}'@'localhost' identified by '';\""
+         -e \"create user '#{title}'@'localhost' identified by ''; \""
         )
     end
   end
@@ -33,7 +33,8 @@ describe 'mysql::user' do
     it "destroys the database" do
       should contain_exec("delete mysql user #{title}").
              with(
-               :command => "mysql -uroot -p13306 --password='' -e 'drop user #{title}'"
+               :command => "mysql -uroot -p13306 --password=''\
+        -e 'drop user #{title}'"
              )
     end
   end

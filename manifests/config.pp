@@ -3,7 +3,7 @@
 # Examples
 #
 #   include mysql::config
-class mysql::config {
+class mysql::config($override_port = 13306) {
   require boxen::config
 
   $configdir  = "${boxen::config::configdir}/mysql"
@@ -12,6 +12,6 @@ class mysql::config {
   $executable = "${boxen::config::homebrewdir}/bin/mysqld_safe"
   $logdir     = "${boxen::config::logdir}/mysql"
   $logerror   = "${logdir}/error.log"
-  $port       = 13306
+  $port       = $override_port
   $socket     = "${datadir}/socket"
 }

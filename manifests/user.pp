@@ -17,15 +17,17 @@ define mysql::user($ensure = present,
 
   if $ensure == 'present' {
     exec { "create mysql user ${name}":
-      command => "mysql -uroot -p13306 --password=''\
-        -e \"create user '${name}'@'${host}' identified by '${password}';\"",
+      command => "mysql -uroot -p${mysql::config::port} --password='' \
+        -e \"create user '${name}'@'${host}' identified by '${password}'; \"",
       require => Exec['wait-for-mysql'],
-      unless  => "mysql -uroot -p13306 -e 'SELECT User,Host FROM mysql.user;' \
-        --password='' | grep -w '${name}' | grep -w '${host}'"
+      unless  => "mysql -uroot -p${mysql::config::port} --password='' \
+        -e 'SELECT User,Host FROM mysql.user;'\
+        | grep -w '${name}' | grep -w '${host}'"
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql user ${name}":
-      command => "mysql -uroot -p13306 --password='' -e 'drop user ${name}'",
+      command => "mysql -uroot -p${mysql::config::port} --password=''\
+        -e 'drop user ${name}'",
       require => Exec['wait-for-mysql']
     }
   }

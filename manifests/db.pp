@@ -10,15 +10,15 @@ define mysql::db($ensure = present) {
 
   if $ensure == 'present' {
     exec { "create mysql db ${name}":
-      command => "mysqladmin -uroot -p13306 create ${name} --password=''",
+      command => "mysqladmin -uroot -p${mysql::config::port} create ${name} --password=''",
       creates => "${mysql::config::datadir}/${name}",
       require => Exec['wait-for-mysql'],
-      unless  => "mysql -uroot -p13306 -e 'show databases' \
+      unless  => "mysql -uroot -p${mysql::config::port} -e 'show databases' \
         --password='' | grep -w '${name}'"
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql db ${name}":
-      command => "mysqladmin -uroot -p13306 drop ${name} --password=''",
+      command => "mysqladmin -uroot -p${mysql::config::port} drop ${name} --password=''",
       require => Exec['wait-for-mysql']
     }
   }
