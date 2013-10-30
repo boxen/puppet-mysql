@@ -12,7 +12,7 @@ class mysql::params {
       $logdir             = "${boxen::config::logdir}/mysql"
 
       $user               = $::boxen_user
-      $host               = 'localhost'
+      $host               = '127.0.0.1'
       $port               = 13306
       $socket             = "${datadir}/socket"
 

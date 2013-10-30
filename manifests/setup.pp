@@ -1,4 +1,8 @@
-class mysql::setup {
+class mysql::setup(
+  $host   = $mysql::params::host,
+  $port   = $mysql::params::port,
+  $socket = $mysql::params::socket,
+) {
 
   exec { 'wait-for-mysql':
     command     => "while ! /usr/bin/nc -z ${host} ${port}; do sleep 1; done",
