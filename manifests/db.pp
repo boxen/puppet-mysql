@@ -12,14 +12,14 @@ define mysql::db(
 
   if $ensure == 'present' {
     exec { "create mysql db ${name}":
-      command => "mysqladmin -h${host} -uroot -p${port} create ${name} --password=''",
+      command => "mysqladmin -h${mysql::host} -uroot -p${mysql::port} create ${name} --password=''",
       creates => "${mysql::datadir}/${name}",
-      unless  => "mysql -h${host} -uroot -p${port} -e 'show databases' \
+      unless  => "mysql -h${mysql::host} -uroot -p${mysql::port} -e 'show databases' \
         --password='' | grep -w '${name}'"
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql db ${name}":
-      command => "mysqladmin -h${host} -uroot -p${port} drop ${name} --password=''",
+      command => "mysqladmin -h${mysql::host} -uroot -p${mysql::port} drop ${name} --password=''",
     }
   }
 }
