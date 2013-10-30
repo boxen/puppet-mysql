@@ -14,7 +14,7 @@ class mysql::setup(
   ~>
   exec { 'mysql-tzinfo-to-sql':
     command     => "mysql_tzinfo_to_sql /usr/share/zoneinfo | \
-      mysql -u root mysql -h ${host} -P ${port} -S ${socket}",
+      mysql -u root mysql -h${host} -P${port} -S${socket}",
     provider    => shell,
     creates     => "${datadir}/.tz_info_created",
     refreshonly => true
@@ -22,9 +22,9 @@ class mysql::setup(
 
   ~>
   exec { 'grant root user privileges':
-    command     => "mysql -u root --password='' -h ${host} -P ${port} -S ${socket} \
+    command     => "mysql -uroot --password='' -h${host} -P${port} -S${socket} \
       -e 'grant all privileges on *.* to \'root\'@\'localhost\''",
-    unless      => "mysql -u root -h ${host} -P ${port} \
+    unless      => "mysql -uroot -h${host} -P${port} \
       -e \"select * from mysql.user where User = 'root' and Host = 'localhost'\" \
       --password='' | grep root",
     provider    => shell,
