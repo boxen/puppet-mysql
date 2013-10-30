@@ -5,21 +5,21 @@
 # Examples
 #
 #   mysql::db { 'foo': }
-define mysql::db($ensure = present) {
+define mysql::db(
+  $ensure = present
+) {
   require mysql
 
   if $ensure == 'present' {
     exec { "create mysql db ${name}":
-      command => "mysqladmin -uroot -p13306 create ${name} --password=''",
-      creates => "${mysql::config::datadir}/${name}",
-      require => Exec['wait-for-mysql'],
-      unless  => "mysql -uroot -p13306 -e 'show databases' \
+      command => "mysqladmin -h${host} -uroot -p${port} create ${name} --password=''",
+      creates => "${mysql::datadir}/${name}",
+      unless  => "mysql -h${host} -uroot -p${port} -e 'show databases' \
         --password='' | grep -w '${name}'"
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql db ${name}":
-      command => "mysqladmin -uroot -p13306 drop ${name} --password=''",
-      require => Exec['wait-for-mysql']
+      command => "mysqladmin -h${host} -uroot -p${port} drop ${name} --password=''",
     }
   }
 }

@@ -56,5 +56,5 @@ class mysql(
   ~>
   class { 'mysql::setup': }
 
-  -> Mysql::Database <| |>
+  -> Mysql::Db <| |>
 }
