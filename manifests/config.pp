@@ -20,6 +20,12 @@ class mysql::config(
   $user               = $mysql::params::user,
 ) inherits mysql::params {
 
+  File {
+    ensure => $ensure,
+    owner  => $user,
+    group  => $user,
+  }
+
   file {
     [
       $configdir,

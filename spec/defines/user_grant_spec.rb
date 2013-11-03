@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe 'mysql::user::grant' do
-  let(:facts) do
-    { :boxen_home => '/opt/boxen' }
-  end
+  let(:facts) { default_facts }
   let(:title) { 'name' }
   let(:user) { 'user' }
   let(:database) { 'database' }

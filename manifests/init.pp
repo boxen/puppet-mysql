@@ -55,9 +55,10 @@ class mysql(
 
   ~>
   class { 'mysql::setup':
-    host   => $host,
-    port   => $port,
-    socket => $socket,
+    datadir => $datadir,
+    host    => $host,
+    port    => $port,
+    socket  => $socket,
   }
 
   -> Mysql::Db <| |>
