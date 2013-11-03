@@ -2,12 +2,11 @@ require "puppet/util/execution"
 
 Puppet::Type.type(:mysql_grant).provide(:default) do
   def create
-    destroy
     mysql "grant #{grants} on #{@resource[:database]}.* to '#{@resource[:username]}'@'#{@resource[:host]}'; flush privileges;"
   end
 
   def destroy
-    mysql "revoke all privileges #{grants} on #{@resource[:database]}.* to '#{@resource[:username]}'@'#{@resource[:host]}'; flush privileges;"
+    mysql "revoke all privileges on #{@resource[:database]}.* to '#{@resource[:username]}'@'#{@resource[:host]}'; flush privileges;"
   end
 
   def exists?
@@ -16,20 +15,14 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
     lines = output.split("\n")
 
     if lines.length > 1
-      current_grants = find_grants_for_db(@resource[:database], lines)
-
-      if @resource[:grants].sort == current_grants.sort
-        true
-      else
-        false
-      end
+      true
     else
       false
     end
   end
 
   def grants_for_db(db, arr)
-    matching_grant = lines[1..-1].select { |line| line =~ / `#{db}`\.\* / }.first
+    matching_grant = arr[1..-1].select { |line| line =~ / `#{db}`\.\* / }.first
     matching_grant.match(/^GRANT (.*) ON /)[1].split(",").map { |w| w.chomp }
   end
 
@@ -38,9 +31,6 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
   end
 
   def mysql(cmd)
-    execute "mysql -u#{@resource[:mysql_user]} -h#{@resource[:mysql_host]} -p#{@resource[:mysql_port]} -u#{@resource[:mysql_user]} -e \"#{str}\" --password='#{@resource[:mysql_pass]}'"
+    execute "mysql -u#{@resource[:mysql_user]} -h#{@resource[:mysql_host]} -p#{@resource[:mysql_port]} -u#{@resource[:mysql_user]} -e \"#{cmd}\" --password='#{@resource[:mysql_pass]}'"
   end
-
-
-
 end

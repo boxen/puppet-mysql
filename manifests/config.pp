@@ -23,7 +23,6 @@ class mysql::config(
   File {
     ensure => $ensure,
     owner  => $user,
-    group  => $user,
   }
 
   file {

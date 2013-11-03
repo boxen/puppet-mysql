@@ -28,10 +28,11 @@ define mysql::user::grant(
   }
   require mysql
 
-  mysql_grant { $database:
+  mysql_grant { $name:
     ensure     => $ensure,
     username   => $username,
     host       => $host,
+    database   => $database,
     grants     => $grants,
     mysql_user => 'root',
     mysql_pass => '',
