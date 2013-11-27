@@ -45,6 +45,8 @@ class mysql(
     port               => $port,
     socket             => $socket,
     user               => $user,
+
+    notify             => Service['mysql'],
   }
 
   ~>

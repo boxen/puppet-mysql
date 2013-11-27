@@ -11,6 +11,7 @@ class mysql::service(
   service { 'dev.mysql':
     ensure => $real_ensure,
     enable => $enable,
+    alias  => 'mysql',
   }
 
   service { 'com.boxen.mysql': # replaced by dev.mysql
