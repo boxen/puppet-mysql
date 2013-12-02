@@ -42,7 +42,7 @@ class mysql {
   }
 
   package { 'boxen/brews/mysql':
-    ensure => '5.5.20-boxen2',
+    ensure => '5.6.13-boxen1',
     notify => Service['dev.mysql']
   }
 
