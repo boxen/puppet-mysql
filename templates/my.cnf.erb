@@ -21,7 +21,6 @@ lower_case_table_names=<%= scope.lookupvar "mysql::config::casing" %>
 max_sp_recursion_depth=3
 <% if (scope.lookupvar "mysql::config::engine") == 'innodb' %>
 innodb_buffer_pool_size=512Mb
-innodb_log_file_size=128Mb
 innodb_file_per_table
 innodb_file_format = Barracuda
 innodb_large_prefix
