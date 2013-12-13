@@ -61,6 +61,10 @@ Puppet::Type.newtype(:mysql_grant) do
     defaultto "localhost"
   end
 
+  newparam :mysql_pass do
+    defaultto "localhost"
+  end
+
   newparam :mysql_port do
     defaultto "3306"
   end
