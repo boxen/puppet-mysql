@@ -11,9 +11,12 @@ Puppet::Type.newtype(:mysql_grant) do
     defaultto :present
   end
 
-  newparam :database do
+  newparam :name do
+    # just used to avoid dupes on database param
     isnamevar
+  end
 
+  newparam :database do
     validate do |v|
       unless v.is_a?(String)
         raise Puppet::ParseError, "mysql_grant#database must be a string!"
