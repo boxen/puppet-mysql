@@ -2,7 +2,6 @@ require "puppet/util/execution"
 
 Puppet::Type.type(:mysql_grant).provide(:default) do
   def create
-    destroy
     mysql "grant #{grants} on #{@resource[:database]}.* to '#{@resource[:username]}'@'#{@resource[:host]}'; flush privileges;"
   end
 
