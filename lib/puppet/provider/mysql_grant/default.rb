@@ -6,7 +6,7 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
   end
 
   def destroy
-    mysql "revoke all privileges on #{@resource[:database]}.* to '#{@resource[:username]}'@'#{@resource[:host]}'; flush privileges;"
+    mysql "revoke #{grants} on #{@resource[:database]}.* to '#{@resource[:username]}'@'#{@resource[:host]}'; flush privileges;"
   end
 
   def exists?
@@ -15,7 +15,13 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
     lines = output.split("\n")
 
     if lines.length > 1
-      true
+      current_grants = grants_for_db(@resource[:database], lines)
+
+      if @resource[:grants].sort == current_grants.sort
+        true
+      else
+        false
+      end
     else
       false
     end
