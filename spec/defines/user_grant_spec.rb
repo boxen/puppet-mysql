@@ -13,15 +13,6 @@ describe 'mysql::user::grant' do
     end
 
     it { should include_class('mysql') }
-
-    it "creates the grant" do
-      should contain_exec("granting #{user} access to #{database}").
-             with(
-               :command => "mysql -uroot -p13306 --password='' \
-        -e \"grant ALL on #{database}.* to '#{user}'@'localhost'; \
-        flush privileges;\""
-        )
-    end
   end
 
 
@@ -34,14 +25,5 @@ describe 'mysql::user::grant' do
 
     it { should include_class('mysql') }
     it { should_not contain_exec("granting #{user} access to #{database}") }
-
-    it "revokes the users privs" do
-      should contain_exec("removing #{user} access to #{database}").
-             with(
-               :command => "mysql -uroot -p13306 --password='' \
-        -e \"REVOKE ALL PRIVILEGES on #{database}.* to '#{user}'@'localhost'; \
-        flush privileges;\""
-             )
-    end
   end
 end
