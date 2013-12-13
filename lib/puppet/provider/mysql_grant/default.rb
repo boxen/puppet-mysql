@@ -16,7 +16,7 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
     lines = output.split("\n")
 
     if lines.length > 1
-      current_grants = find_grants_for_db(@resource[:database], lines)
+      current_grants = grants_for_db(@resource[:database], lines)
 
       if @resource[:grants].sort == current_grants.sort
         true
@@ -29,7 +29,7 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
   end
 
   def grants_for_db(db, arr)
-    matching_grant = lines[1..-1].select { |line| line =~ / `#{db}`\.\* / }.first
+    matching_grant = arr[1..-1].select { |line| line =~ / `#{db}`\.\* / }.first
     matching_grant.match(/^GRANT (.*) ON /)[1].split(",").map { |w| w.chomp }
   end
 
