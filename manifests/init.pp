@@ -64,4 +64,6 @@ class mysql(
   }
 
   -> Mysql::Db <| |>
+
+  Mysql::User <| |> -> Mysql::User::Grant <| |>
 }
