@@ -12,7 +12,8 @@ describe 'mysql::user::grant' do
         :database => database }
     end
 
-    it { should include_class('mysql') }
+    it { should contain_class('mysql') }
+    it { should contain_mysql_grant('name') }
   end
 
 
@@ -23,7 +24,7 @@ describe 'mysql::user::grant' do
         :database => database }
     end
 
-    it { should include_class('mysql') }
+    it { should contain_class('mysql') }
     it { should_not contain_exec("granting #{user} access to #{database}") }
   end
 end
