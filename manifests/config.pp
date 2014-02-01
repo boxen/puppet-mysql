@@ -5,20 +5,20 @@
 #   include mysql::config
 
 class mysql::config(
-  $ensure             = $mysql::params::ensure,
+  $ensure,
 
-  $configdir          = $mysql::params::configdir,
-  $globalconfigprefix = $mysql::params::globalconfigprefix,
-  $datadir            = $mysql::params::datadir,
-  $executable         = $mysql::params::executable,
+  $configdir,
+  $globalconfigprefix,
+  $datadir,
+  $executable,
 
-  $logdir             = $mysql::params::logdir,
+  $logdir,
 
-  $host               = $mysql::params::host,
-  $port               = $mysql::params::port,
-  $socket             = $mysql::params::socket,
-  $user               = $mysql::params::user,
-) inherits mysql::params {
+  $host,
+  $port,
+  $socket,
+  $user,
+) {
 
   File {
     ensure => $ensure,

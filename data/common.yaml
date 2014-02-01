@@ -1,0 +1,4 @@
+---
+mysql::ensure: present
+mysql::enable: true
+
