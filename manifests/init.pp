@@ -25,7 +25,6 @@ class mysql(
 ) {
   validate_string(
     $ensure,
-    $enable,
     $configdir,
     $globalconfigprefix,
     $datadir,
@@ -38,6 +37,8 @@ class mysql(
     $package,
     $version
   )
+
+  validate_bool($enable)
 
   class { 'mysql::package':
     ensure  => $ensure,
