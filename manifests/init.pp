@@ -23,6 +23,21 @@ class mysql(
   $package = undef,
   $version = undef,
 ) {
+  validate_string(
+    $ensure,
+    $enable,
+    $configdir,
+    $globalconfigprefix,
+    $datadir,
+    $executable,
+    $logdir,
+    $user,
+    $host,
+    $port,
+    $socket,
+    $package,
+    $version
+  )
 
   class { 'mysql::package':
     ensure  => $ensure,
