@@ -1,7 +1,7 @@
 GITHUBTARBALL
   remote: boxen/puppet-boxen
   specs:
-    boxen (3.3.4)
+    boxen (3.4.0)
 
 GITHUBTARBALL
   remote: boxen/puppet-homebrew
@@ -18,9 +18,15 @@ GITHUBTARBALL
   specs:
     stdlib (4.1.0)
 
+GITHUBTARBALL
+  remote: ripienaar/puppet-module-data
+  specs:
+    module-data (0.0.1)
+
 DEPENDENCIES
-  boxen (= 3.3.4)
+  boxen (= 3.4.0)
   homebrew (= 1.5.1)
+  module-data (= 0.0.1)
   repository (= 2.2.0)
   stdlib (= 4.1.0)
 

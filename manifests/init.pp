@@ -3,26 +3,42 @@
 # Examples
 #
 #   include mysql
+include boxen::config
+
 class mysql(
-  $ensure             = $mysql::params::ensure,
+  $ensure = undef,
+  $enable = undef,
 
-  $configdir          = $mysql::params::configdir,
-  $globalconfigprefix = $mysql::params::globalconfigprefix,
-  $datadir            = $mysql::params::datadir,
-  $executable         = $mysql::params::executable,
-  $logdir             = $mysql::params::logdir,
+  $configdir = undef,
+  $globalconfigprefix = undef,
+  $datadir = undef,
+  $executable = undef,
+  $logdir = undef,
 
-  $user               = $mysql::params::user,
-  $host               = $mysql::params::host,
-  $port               = $mysql::params::port,
-  $socket             = $mysql::params::socket,
+  $user = undef,
+  $host = undef,
+  $port = undef,
+  $socket = undef,
 
-  $package            = $mysql::params::package,
-  $version            = $mysql::params::version,
+  $package = undef,
+  $version = undef,
+) {
+  validate_string(
+    $ensure,
+    $configdir,
+    $globalconfigprefix,
+    $datadir,
+    $executable,
+    $logdir,
+    $user,
+    $host,
+    $port,
+    $socket,
+    $package,
+    $version
+  )
 
-  $enable             = $mysql::params::enable,
-
-) inherits mysql::params {
+  validate_bool($enable)
 
   class { 'mysql::package':
     ensure  => $ensure,

@@ -1,0 +1,14 @@
+---
+mysql::configdir:          "%{::boxen::config::configdir}/mysql"
+mysql::globalconfigprefix: "%{::boxen::config::homebrewdir}"
+mysql::datadir:            "%{::boxen::config::datadir}/mysql"
+mysql::executable:         "%{::boxen::config::homebrewdir}/bin/mysqld_safe"
+mysql::logdir:             "%{::boxen::config::logdir}/mysql"
+
+mysql::user: "%{::boxen_user}"
+mysql::host: "127.0.0.1"
+mysql::port: "13306"
+mysql::socket: "%{mysql::datadir}/socket"
+
+mysql::package: boxen/brews/mysql
+mysql::version: 5.5.20-boxen2

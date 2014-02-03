@@ -1,0 +1,6 @@
+---
+mysql::configdir:          "/test/boxen/configmysql"
+mysql::globalconfigprefix: "/test/boxen/homebrew"
+mysql::datadir:            "/test/boxen/data/mysql"
+mysql::executable:         "/test/boxen/homebrew/bin/mysqld_safe"
+mysql::logdir:             "/test/boxen/log/mysql"
