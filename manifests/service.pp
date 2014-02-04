@@ -13,6 +13,9 @@ class mysql::service(
     file { "/etc/init.d/${servicename}":
       ensure => 'file',
       source => 'puppet:///mysql/mysql.server',
+      mode   => '0755',
+      owner  => 'root',
+      group  => 'root',
       before => Service['mysql'],
     }
   }
