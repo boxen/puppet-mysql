@@ -4,8 +4,8 @@ mysql::globalconfigprefix: ""
 mysql::datadir:            "/data/mysql"
 mysql::logdir:             "/var/log/mysql"
 
-mysql::user: "root"
-mysql::host: "%{::ipaddress}"
+mysql::user: "mysql"
+mysql::host: "0.0.0.0"
 mysql::port: "3306"
 mysql::socket: "/tmp/mysql.sock"
 
