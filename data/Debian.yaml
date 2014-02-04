@@ -3,6 +3,7 @@ mysql::configdir:          "/etc/mysql"
 mysql::globalconfigprefix: ""
 mysql::datadir:            "/data/mysql"
 mysql::logdir:             "/var/log/mysql"
+mysql::servicename:        "mysql"
 
 mysql::user: "mysql"
 mysql::host: "0.0.0.0"

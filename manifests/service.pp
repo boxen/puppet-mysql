@@ -1,22 +1,25 @@
 class mysql::service(
-  $ensure = $mysql::params::ensure,
-  $enable = $mysql::params::enable,
-) inherits mysql::params {
+  $ensure      = undef,
+  $enable      = undef,
+  $servicename = undef,
+) {
 
   $real_ensure = $ensure ? {
     present => running,
     default => stopped,
   }
 
-  service { 'dev.mysql':
+  service { $servicename:
     ensure => $real_ensure,
     enable => $enable,
     alias  => 'mysql',
   }
 
-  service { 'com.boxen.mysql': # replaced by dev.mysql
-    before => Service['dev.mysql'],
-    enable => false
+  if $osfamily == 'Darwin' {
+    service { 'com.boxen.mysql': # replaced by dev.mysql
+      before => Service['mysql'],
+      enable => false
+    }
   }
 
 }

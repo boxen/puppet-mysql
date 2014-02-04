@@ -12,6 +12,7 @@ class mysql(
   $datadir = undef,
   $executable = undef,
   $logdir = undef,
+  $servicename = undef,
 
   $user = undef,
   $host = undef,
@@ -30,6 +31,7 @@ class mysql(
     $datadir,
     $executable,
     $logdir,
+    $servicename,
     $user,
     $host,
     $port,
@@ -67,8 +69,9 @@ class mysql(
 
   ~>
   class { 'mysql::service':
-    ensure => $ensure,
-    enable => $enable,
+    ensure      => $ensure,
+    enable      => $enable,
+    servicename => $servicename,
   }
 
   ~>

@@ -4,6 +4,7 @@ mysql::globalconfigprefix: "%{::boxen::config::homebrewdir}"
 mysql::datadir:            "%{::boxen::config::datadir}/mysql"
 mysql::executable:         "%{::boxen::config::homebrewdir}/bin/mysqld_safe"
 mysql::logdir:             "%{::boxen::config::logdir}/mysql"
+mysql::servicename:        "dev.mysql"
 
 mysql::user: "%{::boxen_user}"
 mysql::host: "127.0.0.1"
