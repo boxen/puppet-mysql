@@ -1,9 +1,9 @@
 class mysql::setup(
-  $datadir = $mysql::params::datadir,
-  $host    = $mysql::params::host,
-  $port    = $mysql::params::port,
-  $socket  = $mysql::params::socket,
-) inherits mysql::params {
+  $datadir = undef,
+  $host    = undef,
+  $port    = undef,
+  $socket  = undef,
+) {
 
   exec { 'wait-for-mysql':
     command     => "while ! /usr/bin/nc -z ${host} ${port}; do sleep 1; done",
