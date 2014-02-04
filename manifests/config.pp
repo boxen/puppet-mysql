@@ -49,9 +49,6 @@ class mysql::config(
       ensure  => absent,
       force   => true,
       recurse => true ;
-
-    "${boxen::config::envdir}/mysql.sh":
-      ensure => absent,
   }
 
   ->
@@ -72,4 +69,9 @@ class mysql::config(
     priority => 'higher',
   }
 
+  if $::osfamily == 'Darwin' {
+    file { "${boxen::config::envdir}/mysql.sh":
+      ensure => absent,
+    }
+  }
 }
