@@ -12,7 +12,7 @@ class mysql::service(
   if $::osfamily == 'Debian' {
     file { "/etc/init.d/${servicename}":
       ensure => 'file',
-      source => 'puppet:///mysql/mysql.server',
+      source => 'puppet:///modules/mysql/mysql.server',
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
