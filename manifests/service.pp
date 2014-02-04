@@ -9,10 +9,24 @@ class mysql::service(
     default => stopped,
   }
 
+  if $::osfamily == 'Debian' {
+    file { "/etc/init.d/${servicename}":
+      ensure => 'file',
+      source => 'puppet:///mysql/mysql.server',
+      before => Service['mysql'],
+    }
+  }
+
+  $provider = $::osfamily ? {
+    'Debian' => 'init',
+    default  => undef,
+  }
+
   service { $servicename:
-    ensure => $real_ensure,
-    enable => $enable,
-    alias  => 'mysql',
+    ensure   => $real_ensure,
+    enable   => $enable,
+    provider => $provider,
+    alias    => 'mysql',
   }
 
   if $osfamily == 'Darwin' {
