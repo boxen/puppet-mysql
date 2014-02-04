@@ -47,6 +47,7 @@ class mysql::config(
       --tmpdir=/tmp",
     creates  => "${datadir}/mysql",
     provider => shell,
+    user     => $user,
   }
 
   ->
