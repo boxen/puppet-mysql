@@ -34,21 +34,8 @@ class mysql::config(
       ensure => directory ;
 
     "${configdir}/my.cnf":
-      content => template('mysql/my.cnf.erb') ;
-
-    "${globalconfigprefix}/etc/my.cnf":
-      ensure  => link,
-      target  => "${configdir}/my.cnf" ;
-
-    '/Library/LaunchDaemons/dev.mysql.plist':
-      content => template('mysql/dev.mysql.plist.erb'),
-      group   => 'wheel',
-      owner   => 'root' ;
-
-    "${globalconfigprefix}/var/mysql":
-      ensure  => absent,
-      force   => true,
-      recurse => true ;
+      content => template('mysql/my.cnf.erb'),
+      notify  => Service['mysql'] ;
   }
 
   ->
@@ -70,8 +57,23 @@ class mysql::config(
   }
 
   if $::osfamily == 'Darwin' {
-    file { "${boxen::config::envdir}/mysql.sh":
-      ensure => absent,
+    file {
+    "${boxen::config::envdir}/mysql.sh":
+      ensure => absent ;
+
+    '/Library/LaunchDaemons/dev.mysql.plist':
+      content => template('mysql/dev.mysql.plist.erb'),
+      group   => 'wheel',
+      owner   => 'root' ;
+
+    "${globalconfigprefix}/var/mysql":
+      ensure  => absent,
+      force   => true,
+      recurse => true ;
+
+    "${globalconfigprefix}/etc/my.cnf":
+      ensure  => link,
+      target  => "${configdir}/my.cnf" ;
     }
   }
 }

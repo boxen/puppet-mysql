@@ -1,6 +1,6 @@
 ---
 mysql::configdir:          "/etc/mysql"
-mysql::globalconfigprefix: "/etc/mysql"
+mysql::globalconfigprefix: ""
 mysql::datadir:            "/data/mysql"
 mysql::logdir:             "/var/log/mysql"
 
