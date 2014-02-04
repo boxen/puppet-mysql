@@ -3,8 +3,6 @@
 # Examples
 #
 #   include mysql
-include boxen::config
-
 class mysql(
   $ensure = undef,
   $enable = undef,
@@ -23,6 +21,8 @@ class mysql(
   $package = undef,
   $version = undef,
 ) {
+  include boxen::config
+
   validate_string(
     $ensure,
     $configdir,
