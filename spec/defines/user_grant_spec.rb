@@ -7,6 +7,8 @@ describe 'mysql::user::grant' do
   let(:title) { 'name' }
   let(:user) { 'user' }
   let(:database) { 'database' }
+  let(:host) { '%' }
+  let(:grants) { 'ALL' }
 
   context "when ensure is present" do
     let(:params) do
@@ -22,6 +24,25 @@ describe 'mysql::user::grant' do
                :command => "mysql -uroot -p13306 --password='' \
         -e \"grant ALL on #{database}.* to '#{user}'@'localhost'; \
         flush privileges;\""
+        )
+    end
+  end
+
+  context "when setting the host" do
+    let(:params) do
+      { :username => user,
+        :database => database,
+        :host     => host }
+    end
+
+    it "properly quotes the host" do
+      should contain_exec("granting #{user} access to #{database}").
+             with(
+               :command => "mysql -uroot -p13306 --password='' \
+        -e \"grant ALL on #{database}.* to '#{user}'@'#{host}'; \
+        flush privileges;\"",
+               :unless  => "mysql -uroot -p13306 -e 'SHOW GRANTS FOR #{user}@'#{host}';' \
+        --password='' | grep -w '#{database}' | grep -w '#{grants}'"
         )
     end
   end

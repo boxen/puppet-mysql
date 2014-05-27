@@ -28,7 +28,7 @@ define mysql::user::grant($database,
         -e \"grant ${grants} on ${database}.* to '${username}'@'${host}'; \
         flush privileges;\"",
       require => Exec['wait-for-mysql'],
-      unless  => "mysql -uroot -p13306 -e 'SHOW GRANTS FOR ${username}@${host};' \
+      unless  => "mysql -uroot -p13306 -e 'SHOW GRANTS FOR ${username}@'${host}';' \
         --password='' | grep -w '${database}' | grep -w '${grants}'"
     }
   } elsif $ensure == 'absent' {
