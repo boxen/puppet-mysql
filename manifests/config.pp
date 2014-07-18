@@ -3,7 +3,9 @@
 # Examples
 #
 #   include mysql::config
-class mysql::config {
+class mysql::config(
+  $port       = 3306
+) {
   require boxen::config
 
   $configdir  = "${boxen::config::configdir}/mysql"
@@ -12,8 +14,6 @@ class mysql::config {
   $executable = "${boxen::config::homebrewdir}/bin/mysqld_safe"
   $logdir     = "${boxen::config::logdir}/mysql"
   $logerror   = "${logdir}/error.log"
-  $loggeneral = "${logdir}/general.log"
-  $port       = 3306
   $socket     = "${datadir}/socket"
   $charset    = 'utf8mb4'
   $collation  = 'utf8mb4_unicode_ci'

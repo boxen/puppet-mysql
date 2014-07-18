@@ -100,4 +100,16 @@ class mysql {
     subscribe   => Exec['wait-for-mysql'],
     refreshonly => true
   }
+
+  exec { 'grant root user privileges':
+    command     => "mysql -u root --password='' \
+      -P ${mysql::config::port} -S ${mysql::config::socket} \
+      -e 'grant all privileges on *.* to \'root\'@\'localhost\''",
+    unless      => "mysql -u root -P ${mysql::config::port} \
+      -e \"select * from mysql.user where User = 'root' and Host = 'localhost'\" \
+      --password='' | grep root",
+    provider    => shell,
+    subscribe   => Exec['wait-for-mysql'],
+    refreshonly => true
+  }
 }
