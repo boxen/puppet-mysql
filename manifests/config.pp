@@ -14,6 +14,7 @@ class mysql::config(
   $executable = "${boxen::config::homebrewdir}/bin/mysqld_safe"
   $logdir     = "${boxen::config::logdir}/mysql"
   $logerror   = "${logdir}/error.log"
+  $loggeneral = "${logdir}/general.log"
   $socket     = "${datadir}/socket"
   $charset    = 'utf8mb4'
   $collation  = 'utf8mb4_unicode_ci'
