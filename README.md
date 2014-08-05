@@ -15,6 +15,19 @@ mysql::user { 'myuser':
 }
 ```
 
+## Betterment Configuration
+
+[We've heavily customized our my.cnf for large index innodb.](https://github.com/Betterment/puppet-mysql/blob/master/templates/my.cnf.erb)
+
+```
+...
+innodb_buffer_pool_size=512Mb
+innodb_file_per_table
+innodb_file_format = Barracuda
+innodb_large_prefix
+...
+```
+
 ## Versioning (5.5.20 vs 5.6.20)
 
 This version module doesn't support simultaneous installation of 5.6 and 5.5,
