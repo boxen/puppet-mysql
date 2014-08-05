@@ -1,4 +1,5 @@
-# MySQL Puppet Module for Boxen with Enhancements for Betterment's Setup
+# MySQL Puppet Module for Boxen
+### ...with Enhancements for Betterment
 
 [![Build Status](https://travis-ci.org/Betterment/puppet-mysql.png)](https://travis-ci.org/Betterment/puppet-mysql)
 
@@ -8,7 +9,18 @@
 include mysql
 
 mysql::db { 'mydb': }
+
+mysql::user { 'myuser':
+  password => 'mypassword'
+}
 ```
+
+## Versioning (5.5.20 vs 5.6.20)
+
+This version module doesn't support simultaneous installation of 5.6 and 5.5,
+but both brews are kept here for reference. Choose your destiny via symlink.
+
+Current: `readlink files/brews/mysql.rb ===> mysql56.rb`
 
 ## Required Puppet Modules
 
@@ -18,48 +30,13 @@ mysql::db { 'mydb': }
 
 ## Environment
 
-**ATTENTION** Boxen uses a non standard **13306** port to avoid collisions.
+Call us crazy; we still run @ `localhost:3306`. ~~**ATTENTION** Boxen uses a non standard **13306** port to avoid collisions.~~
 
 Once installed, you can access the following variables in your environment, projects, etc:
 
 * BOXEN_MYSQL_PORT: the configured MySQL port
 * BOXEN_MYSQL_URL: the URL for MySQL, including localhost & port
 * BOXEN_MYSQL_SOCKET: the path to the MySQL socket
-
-#### Rails
-
-In config/database.yml:
-
-```yaml
-<%
-  socket = [
-    ENV["BOXEN_MYSQL_SOCKET"],
-    "/var/run/mysql5/mysqld.sock",
-    "/tmp/mysql.sock"
-  ].detect { |f| f && File.exist?(f) }
-
-  port = ENV["BOXEN_MYSQL_PORT"] || "3306"
-%>
-
-development: &development
-  adapter: mysql
-  database: yourapp_development
-  username: root
-<% if socket %>
-  host: localhost
-  socket: <%= socket %>
-<% else %>
-  host: 127.0.0.1
-  port: <%= port %>
-<% end %>
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  <<: *development
-  database: yourapp_test
-```
 
 ## Developing
 
