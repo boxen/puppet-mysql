@@ -33,7 +33,12 @@ innodb_large_prefix
 This version module doesn't support simultaneous installation of 5.6 and 5.5,
 but both brews are kept here for reference. Choose your destiny via symlink.
 
-Current: `readlink files/brews/mysql.rb ===> mysql56.rb`
+```
+  package { 'boxen/brews/mysql':
+    ensure => '5.6.20-boxen2',
+    notify => Service['dev.mysql']
+  }
+```
 
 ## Required Puppet Modules
 
