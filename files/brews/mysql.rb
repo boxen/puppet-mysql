@@ -1,8 +1,6 @@
 require 'formula'
 
-# https://raw.githubusercontent.com/boxen/puppet-mysql/master/files/brews/mysql.rb
 # https://raw.githubusercontent.com/sidereel-dev/puppet-mysql/master/files/brews/mysql.rb
-#
 
 class Mysql < Formula
 

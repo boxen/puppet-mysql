@@ -7,6 +7,10 @@ class mysql {
   require mysql::config
   require homebrew
 
+  # make sure this matches puppet-mysql/files/brews/mysql.rb
+  $mysql_brew_version = '5.6.20-boxen1'
+  $mysql_cellar_basedir = "${boxen::config::homebrewdir}/Cellar/mysql/$mysql_brew_version"
+
   file { [
     $mysql::config::configdir,
     $mysql::config::datadir,
@@ -42,7 +46,7 @@ class mysql {
   }
 
   package { 'boxen/brews/mysql':
-    ensure => '5.6.20-boxen1',
+    ensure => $mysql_brew_version,
     notify => Service['dev.mysql']
   }
 
@@ -56,7 +60,7 @@ class mysql {
   exec { 'init-mysql-db':
     command  => "mysql_install_db \
       --verbose \
-      --basedir=${boxen::config::homebrewdir} \
+      --basedir=${mysql_cellar_basedir} \
       --datadir=${mysql::config::datadir} \
       --tmpdir=/tmp",
     creates  => "${mysql::config::datadir}/mysql",
