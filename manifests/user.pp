@@ -16,7 +16,7 @@ define mysql::user($ensure = present,
   require mysql
 
   if $ensure == 'present' {
-    exec { "create mysql user ${name}":
+    exec { "create mysql user ${name} @ ${host}":
       command => "mysql -uroot -p13306 --password=''\
         -e \"create user '${name}'@'${host}' identified by '${password}';\"",
       require => Exec['wait-for-mysql'],
