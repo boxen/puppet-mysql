@@ -19,8 +19,8 @@ define mysql::user($ensure = present,
   if $ensure == 'present' {
     exec { "create mysql user ${name}":
       command => "mysql -uroot --password='' -e \"\
-        CREATE USER '${name}'@'${host}' IDENTIFIED BY '${password}';\
-        GRANT ${grant} PRIVILEGES ON * . * TO '${name}'@'${host}';\
+CREATE USER '${name}'@'${host}' IDENTIFIED BY '${password}';\
+GRANT ${grant} PRIVILEGES ON * . * TO '${name}'@'${host}';\
         \"",
       require => Exec['wait-for-mysql'],
       unless  => "mysql -uroot -e 'SELECT User,Host FROM mysql.user;' --password='' | grep -w '${name}' | grep -w '${host}'"
