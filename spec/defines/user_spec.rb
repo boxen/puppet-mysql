@@ -14,7 +14,7 @@ describe 'mysql::user' do
     it { should include_class('mysql') }
 
     it "creates the user" do
-      should contain_exec("create mysql user #{title}").
+      should contain_exec("create mysql user #{title} @ localhost").
              with(
                :command => "mysql -uroot -p13306 --password=''\
         -e \"create user '#{title}'@'localhost' identified by '';\""

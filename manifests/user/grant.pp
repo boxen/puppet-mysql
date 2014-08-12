@@ -23,7 +23,7 @@ define mysql::user::grant($database,
   require mysql
 
   if $ensure == 'present' {
-    exec { "granting ${username} access to ${database}":
+    exec { "granting ${username} access to ${database} @ ${host}":
       command => "mysql -uroot -p13306 --password='' \
         -e \"grant ${grants} on ${database}.* to '${username}'@'${host}'; \
         flush privileges;\"",
@@ -32,7 +32,7 @@ define mysql::user::grant($database,
         --password='' | grep -w '${database}' | grep -w '${grants}'"
     }
   } elsif $ensure == 'absent' {
-    exec { "removing ${username} access to ${database}":
+    exec { "removing ${username} access to ${database} @ ${host}":
       command => "mysql -uroot -p13306 --password='' \
         -e \"REVOKE ALL PRIVILEGES on ${database}.* to '${username}'@'${host}'; \
         flush privileges;\"",
