@@ -25,8 +25,10 @@ define mysql::user($ensure = present,
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql user ${name}":
-      command => "mysql -uroot -p13306 --password='' -e 'drop user ${name}'",
-      require => Exec['wait-for-mysql']
+      command => "mysql -uroot -p13306 --password='' -e 'drop user \'${name}\'@\'${host}\''",
+      require => Exec['wait-for-mysql'],
+      onlyif  => "mysql -uroot -p13306 -e 'SELECT User,Host FROM mysql.user;' \
+        --password='' | grep -w '${name}' | grep -w '${host}'"
     }
   }
 }
