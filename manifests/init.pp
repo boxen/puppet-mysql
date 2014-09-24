@@ -11,6 +11,7 @@ class mysql(
   $globalconfigprefix = undef,
   $datadir = undef,
   $executable = undef,
+  $client = undef,
   $logdir = undef,
   $servicename = undef,
 
@@ -30,6 +31,7 @@ class mysql(
     $globalconfigprefix,
     $datadir,
     $executable,
+    $client,
     $logdir,
     $servicename,
     $user,
