@@ -46,6 +46,6 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
   end
 
   def mysql(cmd)
-    execute "mysql -u#{@resource[:mysql_user]} -h#{@resource[:mysql_host]} -p#{@resource[:mysql_port]} -u#{@resource[:mysql_user]} -e \"#{cmd}\" --password='#{@resource[:mysql_pass]}'"
+    execute "#{@resource[:executable]} -u#{@resource[:mysql_user]} -h#{@resource[:mysql_host]} -p#{@resource[:mysql_port]} -u#{@resource[:mysql_user]} -e \"#{cmd}\" --password='#{@resource[:mysql_pass]}'"
   end
 end

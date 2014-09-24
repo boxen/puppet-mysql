@@ -68,4 +68,8 @@ Puppet::Type.newtype(:mysql_grant) do
   newparam :mysql_port do
     defaultto "3306"
   end
+
+  newparam :executable do
+    defaultto "/opt/boxen/homebrew/bin/mysql"
+  end
 end

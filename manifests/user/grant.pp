@@ -38,6 +38,7 @@ define mysql::user::grant(
     mysql_pass => '',
     mysql_host => $mysql::host,
     mysql_port => $mysql::port,
+    executable => $mysql::client,
     require    => Exec['wait-for-mysql'],
   }
 }
