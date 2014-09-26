@@ -10,7 +10,8 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
   end
 
   def exists?
-    output = mysql "show grants for #{@resource[:username]}@#{@resource[:host]}"
+    output = mysql("show grants for #{@resource[:username]}@#{@resource[:host]}",
+                   :combine => true, :failonfail => false)
 
     lines = output.split("\n")
 
@@ -45,7 +46,7 @@ Puppet::Type.type(:mysql_grant).provide(:default) do
     [@resource[:grants]].flatten.join(", ")
   end
 
-  def mysql(cmd)
-    execute "#{@resource[:executable]} -u#{@resource[:mysql_user]} -h#{@resource[:mysql_host]} -p#{@resource[:mysql_port]} -u#{@resource[:mysql_user]} -e \"#{cmd}\" --password='#{@resource[:mysql_pass]}'"
+  def mysql(cmd, options = {})
+    execute "#{@resource[:executable]} -u#{@resource[:mysql_user]} -h#{@resource[:mysql_host]} -p#{@resource[:mysql_port]} -u#{@resource[:mysql_user]} -e \"#{cmd}\" --password='#{@resource[:mysql_pass]}'", options
   end
 end
