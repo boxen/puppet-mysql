@@ -10,6 +10,7 @@ class mysql(
   $configdir = undef,
   $globalconfigprefix = undef,
   $datadir = undef,
+  $bindir = undef,
   $executable = undef,
   $client = undef,
   $logdir = undef,
@@ -30,6 +31,7 @@ class mysql(
     $configdir,
     $globalconfigprefix,
     $datadir,
+    $bindir,
     $executable,
     $client,
     $logdir,
@@ -39,7 +41,7 @@ class mysql(
     $port,
     $socket,
     $package,
-    $version
+    $version,
   )
 
   validate_bool($enable)
@@ -55,6 +57,7 @@ class mysql(
     ensure             => $ensure,
 
     configdir          => $configdir,
+    bindir             => $bindir,
     globalconfigprefix => $globalconfigprefix,
     datadir            => $datadir,
     executable         => $executable,
@@ -78,6 +81,7 @@ class mysql(
 
   ~>
   class { 'mysql::setup':
+    bindir  => $bindir,
     datadir => $datadir,
     host    => $host,
     port    => $port,

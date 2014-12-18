@@ -8,6 +8,7 @@ class mysql::config(
   $ensure,
 
   $configdir,
+  $bindir,
   $globalconfigprefix,
   $datadir,
   $executable,
@@ -40,7 +41,7 @@ class mysql::config(
 
   ->
   exec { 'init-mysql-db':
-    command  => "mysql_install_db \
+    command  => "${bindir}/mysql_install_db \
       --verbose \
       --basedir=${globalconfigprefix} \
       --datadir=${datadir} \
