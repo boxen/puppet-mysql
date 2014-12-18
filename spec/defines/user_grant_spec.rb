@@ -21,7 +21,7 @@ describe 'mysql::user::grant' do
     it "creates the grant" do
       should contain_exec("granting #{user} access to #{database} @ localhost").
              with(
-               :command => "mysql -uroot -p13306 --password='' \
+               :command => "/opt/boxen/homebrew/bin/mysql -uroot -p13306 --password='' \
         -e \"grant ALL on #{database}.* to '#{user}'@'localhost'; \
         flush privileges;\""
         )
@@ -38,10 +38,10 @@ describe 'mysql::user::grant' do
     it "properly quotes the host" do
       should contain_exec("granting #{user} access to #{database} @ #{host}").
              with(
-               :command => "mysql -uroot -p13306 --password='' \
+               :command => "/opt/boxen/homebrew/bin/mysql -uroot -p13306 --password='' \
         -e \"grant ALL on #{database}.* to '#{user}'@'#{host}'; \
         flush privileges;\"",
-               :unless  => "mysql -uroot -p13306 -e 'SHOW GRANTS FOR #{user}@'#{host}';' \
+               :unless  => "/opt/boxen/homebrew/bin/mysql -uroot -p13306 -e 'SHOW GRANTS FOR #{user}@'#{host}';' \
         --password='' | grep -w '#{database}' | grep -w '#{grants}'"
         )
     end
@@ -61,7 +61,7 @@ describe 'mysql::user::grant' do
     it "revokes the users privs" do
       should contain_exec("removing #{user} access to #{database} @ localhost").
              with(
-               :command => "mysql -uroot -p13306 --password='' \
+               :command => "/opt/boxen/homebrew/bin/mysql -uroot -p13306 --password='' \
         -e \"REVOKE ALL PRIVILEGES on #{database}.* to '#{user}'@'localhost'; \
         flush privileges;\""
              )

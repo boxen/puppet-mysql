@@ -24,16 +24,16 @@ define mysql::user::grant($database,
 
   if $ensure == 'present' {
     exec { "granting ${username} access to ${database} @ ${host}":
-      command => "mysql -uroot -p13306 --password='' \
+      command => "${mysql::config::bindir}/mysql -uroot -p13306 --password='' \
         -e \"grant ${grants} on ${database}.* to '${username}'@'${host}'; \
         flush privileges;\"",
       require => Exec['wait-for-mysql'],
-      unless  => "mysql -uroot -p13306 -e 'SHOW GRANTS FOR ${username}@'${host}';' \
+      unless  => "${mysql::config::bindir}/mysql -uroot -p13306 -e 'SHOW GRANTS FOR ${username}@'${host}';' \
         --password='' | grep -w '${database}' | grep -w '${grants}'"
     }
   } elsif $ensure == 'absent' {
     exec { "removing ${username} access to ${database} @ ${host}":
-      command => "mysql -uroot -p13306 --password='' \
+      command => "${mysql::config::bindir}/mysql -uroot -p13306 --password='' \
         -e \"REVOKE ALL PRIVILEGES on ${database}.* to '${username}'@'${host}'; \
         flush privileges;\"",
       require => Exec['wait-for-mysql'],
