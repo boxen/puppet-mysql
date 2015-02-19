@@ -16,7 +16,7 @@ describe 'mysql::db' do
     it "creates the database" do
       should contain_exec("create mysql db #{title}").
              with(
-               :command => "mysqladmin -uroot -p13306 create #{title} --password=''",
+               :command => "/opt/boxen/homebrew/bin/mysqladmin -uroot -p13306 create #{title} --password=''",
                :creates => "/opt/boxen/data/mysql/#{title}"
              )
     end
@@ -33,7 +33,7 @@ describe 'mysql::db' do
     it "destroys the database" do
       should contain_exec("delete mysql db #{title}").
              with(
-               :command => "mysqladmin -uroot -p13306 drop #{title} --password=''"
+               :command => "/opt/boxen/homebrew/bin/mysqladmin -uroot -p13306 drop #{title} --password=''"
              )
     end
   end

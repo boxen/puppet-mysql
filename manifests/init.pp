@@ -54,7 +54,7 @@ class mysql {
   }
 
   exec { 'init-mysql-db':
-    command  => "mysql_install_db \
+    command  => "${mysql::config::bindir}/mysql_install_db \
       --verbose \
       --basedir=${boxen::config::homebrewdir} \
       --datadir=${mysql::config::datadir} \
@@ -93,8 +93,8 @@ class mysql {
   }
 
   exec { 'mysql-tzinfo-to-sql':
-    command     => "mysql_tzinfo_to_sql /usr/share/zoneinfo | \
-      mysql -u root mysql -P ${mysql::config::port} -S ${mysql::config::socket}",
+    command     => "${mysql::config::bindir}/mysql_tzinfo_to_sql /usr/share/zoneinfo | \
+      ${mysql::config::bindir}/mysql -u root mysql -P ${mysql::config::port} -S ${mysql::config::socket}",
     provider    => shell,
     creates     => "${mysql::config::datadir}/.tz_info_created",
     subscribe   => Exec['wait-for-mysql'],
@@ -102,10 +102,10 @@ class mysql {
   }
 
   exec { 'grant root user privileges':
-    command     => "mysql -u root --password='' \
+    command     => "${mysql::config::bindir}/mysql -u root --password='' \
       -P ${mysql::config::port} -S ${mysql::config::socket} \
       -e 'grant all privileges on *.* to \'root\'@\'localhost\''",
-    unless      => "mysql -u root -P ${mysql::config::port} \
+    unless      => "${mysql::config::bindir}/mysql -u root -P ${mysql::config::port} \
       -e \"select * from mysql.user where User = 'root' and Host = 'localhost'\" \
       --password='' | grep root",
     provider    => shell,
