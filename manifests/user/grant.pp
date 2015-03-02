@@ -16,7 +16,7 @@ define mysql::user::grant($database,
                           $readonly = false) {
 
   if $readonly {
-    $grants = 'SELECT, LOCK TABLES, CREATE TEMPORARY TABLES'
+    $grants = 'SELECT, CREATE TEMPORARY TABLES, LOCK TABLES'
   } else {
     $grants = 'ALL'
   }
