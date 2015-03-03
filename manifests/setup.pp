@@ -1,3 +1,4 @@
+# Options for configuring MySQL
 class mysql::setup (
   $bindir  = undef,
   $datadir = undef,

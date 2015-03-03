@@ -1,3 +1,4 @@
+# The running MySQL daemon
 class mysql::service(
   $ensure      = undef,
   $enable      = undef,
@@ -32,7 +33,7 @@ class mysql::service(
     alias    => 'mysql',
   }
 
-  if $osfamily == 'Darwin' {
+  if $::osfamily == 'Darwin' {
     service { 'com.boxen.mysql': # replaced by dev.mysql
       before => Service['mysql'],
       enable => false

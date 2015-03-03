@@ -1,3 +1,4 @@
+# A Homebrew installation of MySQL (and no-op on non-OSX platforms)
 class mysql::package(
   $ensure  = $mysql::params::ensure,
   $version = $mysql::params::version,

@@ -5,20 +5,20 @@
 #   include mysql::config
 
 class mysql::config(
-  $ensure,
+  $ensure = undef,
 
-  $configdir,
-  $bindir,
-  $globalconfigprefix,
-  $datadir,
-  $executable,
+  $configdir = undef,
+  $bindir = undef,
+  $globalconfigprefix = undef,
+  $datadir = undef,
+  $executable = undef,
 
-  $logdir,
+  $logdir = undef,
 
-  $host,
-  $port,
-  $socket,
-  $user,
+  $host = undef,
+  $port = undef,
+  $socket = undef,
+  $user = undef,
 ) {
 
   File {
