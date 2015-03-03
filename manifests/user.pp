@@ -9,23 +9,25 @@
 # Examples
 #
 #   mysql::user { 'foo': }
-define mysql::user($ensure = present,
-                    $readonly = false,
-                    $host = 'localhost',
-                    $password = '') {
+define mysql::user(
+  $ensure   = present,
+  $readonly = false,
+  $host     = 'localhost',
+  $password = '',
+) {
   require mysql
 
   if $ensure == 'present' {
-    exec { "create mysql user ${name} @ ${host}":
-      command => "${mysql::config::bindir}/mysql -uroot -p13306 --password=''\
+    exec { "create mysql user ${name}":
+      command => "${mysql::bindir}/mysql -h${mysql::host} -uroot -p${mysql::port} --password=''\
         -e \"create user '${name}'@'${host}' identified by '${password}';\"",
       require => Exec['wait-for-mysql'],
-      unless  => "${mysql::config::bindir}/mysql -uroot -p13306 -e 'SELECT User,Host FROM mysql.user;' \
+      unless  => "${mysql::bindir}/mysql -h${mysql::host} -uroot -p${mysql::port} -e 'SELECT User,Host FROM mysql.user;' \
         --password='' | grep -w '${name}' | grep -w '${host}'"
     }
   } elsif $ensure == 'absent' {
     exec { "delete mysql user ${name}":
-      command => "${mysql::config::bindir}/mysql -uroot -p13306 --password='' -e 'drop user ${name}'",
+      command => "${mysql::bindir}/mysql -h${mysql::host} -uroot -p${mysql::port} --password='' -e 'drop user ${name}'",
       require => Exec['wait-for-mysql']
     }
   }

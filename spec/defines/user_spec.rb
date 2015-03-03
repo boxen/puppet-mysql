@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe 'mysql::user' do
-  let(:facts) do
-    { :boxen_home => '/opt/boxen' }
-  end
+  let(:facts) { default_facts }
   let(:title) { 'name' }
 
   context "when ensure is present" do
@@ -14,9 +12,9 @@ describe 'mysql::user' do
     it { should include_class('mysql') }
 
     it "creates the user" do
-      should contain_exec("create mysql user #{title} @ localhost").
+      should contain_exec("create mysql user #{title}").
              with(
-               :command => "/opt/boxen/homebrew/bin/mysql -uroot -p13306 --password=''\
+               :command => "/test/boxen/homebrew/bin/mysql -h127.0.0.1 -uroot -p13306 --password=''\
         -e \"create user '#{title}'@'localhost' identified by '';\""
         )
     end
@@ -33,7 +31,7 @@ describe 'mysql::user' do
     it "destroys the database" do
       should contain_exec("delete mysql user #{title}").
              with(
-               :command => "/opt/boxen/homebrew/bin/mysql -uroot -p13306 --password='' -e 'drop user #{title}'"
+               :command => "/test/boxen/homebrew/bin/mysql -h127.0.0.1 -uroot -p13306 --password='' -e 'drop user #{title}'"
              )
     end
   end

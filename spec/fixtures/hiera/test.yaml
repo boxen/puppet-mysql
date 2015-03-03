@@ -1,0 +1,10 @@
+---
+mysql::configdir:          "/test/boxen/configmysql"
+mysql::globalconfigprefix: "/test/boxen/homebrew"
+mysql::datadir:            "/test/boxen/data/mysql"
+mysql::bindir:             "/test/boxen/homebrew/bin"
+mysql::executable:         "/test/boxen/homebrew/bin/mysqld_safe"
+mysql::logdir:             "/test/boxen/log/mysql"
+
+mysql::host:               "127.0.0.1"
+mysql::port:               "13306"

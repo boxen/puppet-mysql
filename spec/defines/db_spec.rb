@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe 'mysql::db' do
-  let(:facts) do
-    { :boxen_home => '/opt/boxen' }
-  end
+  let(:facts) { default_facts }
   let(:title) { 'name' }
 
   context "when ensure is present" do
@@ -16,8 +14,8 @@ describe 'mysql::db' do
     it "creates the database" do
       should contain_exec("create mysql db #{title}").
              with(
-               :command => "/opt/boxen/homebrew/bin/mysqladmin -uroot -p13306 create #{title} --password=''",
-               :creates => "/opt/boxen/data/mysql/#{title}"
+               :command => "/test/boxen/homebrew/bin/mysqladmin -h127.0.0.1 -uroot -p13306 create #{title} --password=''",
+               :creates => "/test/boxen/data/mysql/#{title}"
              )
     end
   end
@@ -33,7 +31,7 @@ describe 'mysql::db' do
     it "destroys the database" do
       should contain_exec("delete mysql db #{title}").
              with(
-               :command => "/opt/boxen/homebrew/bin/mysqladmin -uroot -p13306 drop #{title} --password=''"
+               :command => "/test/boxen/homebrew/bin/mysqladmin -h127.0.0.1 -uroot -p13306 drop #{title} --password=''"
              )
     end
   end

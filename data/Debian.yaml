@@ -1,0 +1,14 @@
+---
+mysql::configdir:          "/etc/mysql"
+mysql::globalconfigprefix: ""
+mysql::datadir:            "/data/mysql"
+mysql::logdir:             "/var/log/mysql"
+mysql::servicename:        "mysql"
+
+mysql::user: "mysql"
+mysql::host: "0.0.0.0"
+mysql::port: "3306"
+mysql::socket: "/tmp/mysql.sock"
+
+mysql::package: mysql-server
+mysql::version: installed

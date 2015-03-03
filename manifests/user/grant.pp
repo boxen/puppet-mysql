@@ -9,34 +9,36 @@
 #
 #   mysql::user { 'foo': }
 
-define mysql::user::grant($database,
-                          $username,
-                          $ensure = present,
-                          $host = 'localhost',
-                          $readonly = false) {
+define mysql::user::grant(
+  $database,
+  $username,
+  $ensure   = present,
+  $host     = 'localhost',
+  $readonly = false
+) {
 
   if $readonly {
-    $grants = 'SELECT, CREATE TEMPORARY TABLES, LOCK TABLES'
+    $grants = [
+      'SELECT',
+      'LOCK TABLES',
+      'CREATE TEMPORARY TABLES',
+    ]
   } else {
     $grants = 'ALL'
   }
   require mysql
 
-  if $ensure == 'present' {
-    exec { "granting ${username} access to ${database} @ ${host}":
-      command => "${mysql::config::bindir}/mysql -uroot -p13306 --password='' \
-        -e \"grant ${grants} on ${database}.* to '${username}'@'${host}'; \
-        flush privileges;\"",
-      require => Exec['wait-for-mysql'],
-      unless  => "${mysql::config::bindir}/mysql -uroot -p13306 -e 'SHOW GRANTS FOR ${username}@'${host}';' \
-        --password='' | grep -w '${database}' | grep -w '${grants}'"
-    }
-  } elsif $ensure == 'absent' {
-    exec { "removing ${username} access to ${database} @ ${host}":
-      command => "${mysql::config::bindir}/mysql -uroot -p13306 --password='' \
-        -e \"REVOKE ALL PRIVILEGES on ${database}.* to '${username}'@'${host}'; \
-        flush privileges;\"",
-      require => Exec['wait-for-mysql'],
-    }
+  mysql_grant { $name:
+    ensure     => $ensure,
+    username   => $username,
+    host       => $host,
+    database   => $database,
+    grants     => $grants,
+    mysql_user => 'root',
+    mysql_pass => '',
+    mysql_host => $mysql::host,
+    mysql_port => $mysql::port,
+    executable => $mysql::client,
+    require    => Exec['wait-for-mysql'],
   }
 }
