@@ -44,7 +44,7 @@ class mysql(
     $version,
   )
 
-  validate_bool($enable)
+  validate_bool(str2bool($enable))
 
   class { 'mysql::package':
     ensure  => $ensure,
@@ -75,7 +75,7 @@ class mysql(
   ~>
   class { 'mysql::service':
     ensure      => $ensure,
-    enable      => $enable,
+    enable      => str2bool($enable),
     servicename => $servicename,
   }
 
