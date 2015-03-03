@@ -7,7 +7,7 @@ describe "mysql::config" do
       "ensure" => "present",
       "configdir" => "/test/boxen/config/mysql",
       "globalconfigprefix" => "/test/boxen/homebrew",
-      "bindir" => "/test/boxen/homebrew/bin"
+      "bindir" => "/test/boxen/homebrew/bin",
       "datadir" => "/test/boxen/data/mysql",
       "executable" => "/test/boxen/homebrew/bin/mysql",
       "logdir" => "/test/boxen/log/mysql",
