@@ -63,11 +63,6 @@ class mysql::config(
     "${boxen::config::envdir}/mysql.sh":
       ensure => absent ;
 
-    '/Library/LaunchDaemons/dev.mysql.plist':
-      content => template('mysql/dev.mysql.plist.erb'),
-      group   => 'wheel',
-      owner   => 'root' ;
-
     "${globalconfigprefix}/var/mysql":
       ensure  => absent,
       force   => true,
