@@ -17,7 +17,7 @@ class mysql::service(
       mode   => '0755',
       owner  => 'root',
       group  => 'root',
-      before => Service['mysql'],
+      before => Service[$servicename],
     }
   }
 
@@ -26,7 +26,7 @@ class mysql::service(
       content => template('mysql/dev.mysql.plist.erb'),
       owner   => 'root',
       group   => 'wheel',
-      before  => Service['mysql'],
+      before  => Service[$servicename],
     }
   }
 
@@ -35,18 +35,28 @@ class mysql::service(
     default  => undef,
   }
 
-  service { $servicename:
-    ensure   => $real_ensure,
-    enable   => $enable,
-    provider => $provider,
-    alias    => 'mysql',
-  }
-
   if $::osfamily == 'Darwin' {
+    service { $servicename:
+      ensure   => $real_ensure,
+      enable   => $enable,
+      provider => $provider,
+      alias    => 'mysql',
+      # Hardcode -w because Puppet's detection of when it is needed is
+      # sometimes flaky which causes MySQL to not restart.
+      start    => "launchctl load -w /Library/LaunchDaemons/${servicename}.plist",
+    }
+
     service { 'com.boxen.mysql': # replaced by dev.mysql
-      before => Service['mysql'],
+      before => Service[$servicename],
       enable => false
     }
   }
-
+  else {
+    service { $servicename:
+      ensure   => $real_ensure,
+      enable   => $enable,
+      provider => $provider,
+      alias    => 'mysql',
+    }
+  }
 }
