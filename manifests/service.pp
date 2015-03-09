@@ -21,6 +21,15 @@ class mysql::service(
     }
   }
 
+  if $::osfamily == 'Darwin' {
+    file { "/Library/LaunchDaemons/${servicename}.plist":
+      content => template('mysql/dev.mysql.plist.erb'),
+      owner   => 'root',
+      group   => 'wheel',
+      before  => Service['mysql'],
+    }
+  }
+
   $provider = $::osfamily ? {
     'Debian' => 'init',
     default  => undef,
