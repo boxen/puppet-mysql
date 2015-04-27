@@ -63,12 +63,12 @@ class mysql::config(
     "${boxen::config::envdir}/mysql.sh":
       ensure => absent ;
 
-    "${globalconfigprefix}/var/mysql":
+    "${boxen::config::homebrewdir}/var/mysql":
       ensure  => absent,
       force   => true,
       recurse => true ;
 
-    "${globalconfigprefix}/etc/my.cnf":
+    "${boxen::config::homebrewdir}/etc/my.cnf":
       ensure  => link,
       target  => "${configdir}/my.cnf" ;
     }

@@ -10,17 +10,6 @@ class mysql::service(
     default => stopped,
   }
 
-  if $::osfamily == 'Debian' {
-    file { "/etc/init.d/${servicename}":
-      ensure => 'file',
-      source => 'puppet:///modules/mysql/mysql.server',
-      mode   => '0755',
-      owner  => 'root',
-      group  => 'root',
-      before => Service[$servicename],
-    }
-  }
-
   if $::osfamily == 'Darwin' {
     file { "/Library/LaunchDaemons/${servicename}.plist":
       content => template('mysql/dev.mysql.plist.erb'),
@@ -28,11 +17,6 @@ class mysql::service(
       group   => 'wheel',
       before  => Service[$servicename],
     }
-  }
-
-  $provider = $::osfamily ? {
-    'Debian' => 'init',
-    default  => undef,
   }
 
   if $::osfamily == 'Darwin' {
