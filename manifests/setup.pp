@@ -34,4 +34,9 @@ class mysql::setup (
     refreshonly => true
   }
 
+  ~>
+  file { '/tmp/mysql.sock':
+    ensure  => link,
+    target  => '/opt/boxen/data/socket' ;
+  }
 }

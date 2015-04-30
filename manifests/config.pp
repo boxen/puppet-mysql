@@ -37,10 +37,6 @@ class mysql::config(
     "${configdir}/my.cnf":
       content => template('mysql/my.cnf.erb'),
       notify  => Service['mysql'] ;
-
-    '/tmp/mysql.sock':
-      ensure  => link,
-      target  => '/opt/boxen/data/socket' ;
   }
 
   ->
