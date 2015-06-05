@@ -1,15 +1,8 @@
 class Mysql < Formula
   homepage "https://dev.mysql.com/doc/refman/5.6/en/"
-  url "https://cdn.mysql.com/Downloads/MySQL-5.6/mysql-5.6.23.tar.gz"
-  mirror "http://downloads.sourceforge.net/project/mysql.mirror/MySQL%205.6.23/mysql-5.6.23.tar.gz"
-  sha256 "3bd21af06a9304e372daba41fa5612bb54ac1bc05a4349b3160d0cda972ac098"
-
-  # Fixes compilation with OpenSSL 1.0.2
-  # https://bugs.mysql.com/bug.php?id=75623
-  patch do
-    url "https://github.com/mysql/mysql-server/pull/3.diff"
-    sha1 "6b17a31ee32e373dca0f257f7c7884ac6dcf8e1f"
-  end
+  url "https://cdn.mysql.com/Downloads/MySQL-5.6/mysql-5.6.25.tar.gz"
+  mirror "http://downloads.sourceforge.net/project/mysql.mirror/MySQL%205.6.25/mysql-5.6.25.tar.gz"
+  sha256 "15079c0b83d33a092649cbdf402c9225bcd3f33e87388407be5cdbf1432c7fbd"
 
   option :universal
   option "with-tests", "Build with unit tests"
