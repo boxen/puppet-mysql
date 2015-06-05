@@ -4,6 +4,13 @@ class Mysql < Formula
   mirror "http://downloads.sourceforge.net/project/mysql.mirror/MySQL%205.6.23/mysql-5.6.23.tar.gz"
   sha256 "3bd21af06a9304e372daba41fa5612bb54ac1bc05a4349b3160d0cda972ac098"
 
+  # Fixes compilation with OpenSSL 1.0.2
+  # https://bugs.mysql.com/bug.php?id=75623
+  patch do
+    url "https://github.com/mysql/mysql-server/pull/3.diff"
+    sha1 "6b17a31ee32e373dca0f257f7c7884ac6dcf8e1f"
+  end
+
   option :universal
   option "with-tests", "Build with unit tests"
   option "with-embedded", "Build the embedded server"
