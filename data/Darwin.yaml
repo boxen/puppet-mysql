@@ -1,6 +1,6 @@
 ---
 mysql::configdir:          "%{::boxen::config::configdir}/mysql"
-mysql::globalconfigprefix: "%{::boxen::config::homebrewdir}/opt/mysql"
+mysql::globalconfigprefix: "%{::boxen::config::homebrewdir}"
 mysql::datadir:            "%{::boxen::config::datadir}/mysql"
 mysql::bindir:             "%{::boxen::config::homebrewdir}/bin"
 mysql::executable:         "%{::boxen::config::homebrewdir}/bin/mysqld_safe"
