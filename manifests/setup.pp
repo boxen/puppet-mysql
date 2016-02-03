@@ -13,24 +13,26 @@ class mysql::setup (
     timeout     => 30,
     refreshonly => true
   }
-
+  ~>  exec { 'mysql-set-root-password':
+    command => "mysqladmin -u root -p'' password ${mysql::rootpwd}",
+    onlyif  => "mysql -uroot -ppassword -e ''; test $? != 0",
+  }
+  ~>
+  exec { 'grant root user privileges':
+    command     => "${bindir}/mysql -uroot -p${mysql::rootpwd} -h${host} -P${port} -S${socket} \
+      -e \"grant all privileges on *.* to 'root'@'%' identified by '${mysql::rootpwd}' with grant option; grant all privileges on *.* to 'root'@'localhost' identified by '${mysql::rootpwd}' with grant option;flush privileges;\"",
+    unless      => "${bindir}/mysql -uroot -h${host} -P${port} \
+      -e \"select * from mysql.user where User = 'root' and Host = '%'\" \
+      --password=${mysql::rootpwd} | grep root",
+    provider    => shell,
+    refreshonly => true
+  }
   ~>
   exec { 'mysql-tzinfo-to-sql':
     command     => "${bindir}/mysql_tzinfo_to_sql /usr/share/zoneinfo | \
-      ${bindir}/mysql -u root mysql -h${host} -P${port} -S${socket}",
+      ${bindir}/mysql -u root mysql -h${host} -P${port} -S${socket} -p${mysql::rootpwd}",
     provider    => shell,
     creates     => "${datadir}/.tz_info_created",
-    refreshonly => true
-  }
-
-  ~>
-  exec { 'grant root user privileges':
-    command     => "${bindir}/mysql -uroot --password='' -h${host} -P${port} -S${socket} \
-      -e 'grant all privileges on *.* to \'root\'@\'localhost\''",
-    unless      => "${bindir}/mysql -uroot -h${host} -P${port} \
-      -e \"select * from mysql.user where User = 'root' and Host = 'localhost'\" \
-      --password='' | grep root",
-    provider    => shell,
     refreshonly => true
   }
 

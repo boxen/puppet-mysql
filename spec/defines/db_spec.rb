@@ -14,7 +14,7 @@ describe 'mysql::db' do
     it "creates the database" do
       should contain_exec("create mysql db #{title}").
              with(
-               :command => "/test/boxen/homebrew/bin/mysqladmin -h127.0.0.1 -uroot -p13306 create #{title} --password=''",
+               :command => "/test/boxen/homebrew/bin/mysqladmin -h127.0.0.1 -uroot -P13306 create #{title} --password=",
                :creates => "/test/boxen/data/mysql/#{title}"
              )
     end
@@ -24,14 +24,13 @@ describe 'mysql::db' do
     let(:params) do
       { :ensure => 'absent' }
     end
-
     it { should include_class('mysql') }
     it { should_not contain_exec("create mysql db #{title}") }
 
     it "destroys the database" do
       should contain_exec("delete mysql db #{title}").
              with(
-               :command => "/test/boxen/homebrew/bin/mysqladmin -h127.0.0.1 -uroot -p13306 drop #{title} --password=''"
+               :command => "/test/boxen/homebrew/bin/mysqladmin -h127.0.0.1 -uroot -P13306 drop #{title} --password="
              )
     end
   end
