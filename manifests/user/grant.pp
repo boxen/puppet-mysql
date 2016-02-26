@@ -35,7 +35,7 @@ define mysql::user::grant(
     database   => $database,
     grants     => $grants,
     mysql_user => 'root',
-    mysql_pass => '',
+    mysql_pass => $mysql::rootpwd,
     mysql_host => $mysql::host,
     mysql_port => $mysql::port,
     executable => $mysql::client,

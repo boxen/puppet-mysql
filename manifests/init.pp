@@ -20,6 +20,7 @@ class mysql(
   $host = undef,
   $port = undef,
   $socket = undef,
+  $rootpwd = undef,
 
   $package = undef,
   $version = undef,
@@ -40,6 +41,7 @@ class mysql(
     $host,
     $port,
     $socket,
+    $rootpwd,
     $package,
     $version,
   )
