@@ -7,4 +7,4 @@ mysql::executable:         "/test/boxen/homebrew/bin/mysqld_safe"
 mysql::logdir:             "/test/boxen/log/mysql"
 
 mysql::host:               "127.0.0.1"
-mysql::port:               "13306"
+mysql::port:               "3306"
