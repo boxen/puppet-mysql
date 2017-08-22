@@ -26,11 +26,6 @@ class Mysql < Formula
   conflicts_with "mysql-connector-c",
     :because => "both install MySQL client libraries"
 
-  fails_with :llvm do
-    build 2326
-    cause "https://github.com/Homebrew/homebrew/issues/issue/144"
-  end
-
   def datadir
     Pathname.new "/opt/boxen/data/mysql"
   end
