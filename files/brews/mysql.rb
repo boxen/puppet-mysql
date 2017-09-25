@@ -57,7 +57,7 @@ class Mysql < Formula
       -DWITH_SSL=system
       -DDEFAULT_CHARSET=utf8
       -DDEFAULT_COLLATION=utf8_general_ci
-      -DSYSCONFDIR=#{etc}
+      -DSYSCONFDIR=#{etc}/boxen/mysql
       -DCOMPILATION_COMMENT=Homebrew
       -DWITH_EDITLINE=system
     ]
