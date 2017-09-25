@@ -68,6 +68,9 @@ class mysql::config(
       force   => true,
       recurse => true ;
 
+    "${globalconfigprefix}/etc":
+      ensure  => directory ;
+
     "${globalconfigprefix}/etc/my.cnf":
       ensure  => link,
       target  => "${configdir}/my.cnf" ;
