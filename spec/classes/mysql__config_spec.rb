@@ -12,7 +12,7 @@ describe "mysql::config" do
       "executable" => "/test/boxen/homebrew/bin/mysql",
       "logdir" => "/test/boxen/log/mysql",
       "host" => "127.0.0.1",
-      "port" => "13306",
+      "port" => "3306",
       "socket" => "/test/boxen/sockets/mysql",
       "user" => "boxenuser"
     }

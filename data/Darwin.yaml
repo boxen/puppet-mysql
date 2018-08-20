@@ -10,7 +10,7 @@ mysql::servicename:        "dev.mysql"
 
 mysql::user: "%{::boxen_user}"
 mysql::host: "127.0.0.1"
-mysql::port: "13306"
+mysql::port: "3306"
 mysql::socket: "%{::boxen::config::datadir}/socket"
 
 mysql::package: boxen/brews/mysql
